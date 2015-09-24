@@ -1,0 +1,14 @@
+
+Bar {
+    background-color: #181712;
+}
+
+QWidget {
+    font-size: 14px;
+    color: white;
+}
+
+FontAwesomeIcon {
+    color: #6abed8;
+    font: "FontAwesome"; 
+}

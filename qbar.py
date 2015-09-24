@@ -35,14 +35,47 @@ parser.add_argument(
     type=str,
     default=None,
     help="Stylesheet file to override the default style")
+parser.add_argument(
+    "--config",
+    "-c",
+    default="~/.config/qbar.yml",
+    help="Congifuration file for qbar written in yaml")
 ARGS = parser.parse_args()
+
+# logging.basicConfig(level=logging.INFO)
 
 
 # Init app
 app = QApplication(sys.argv)
 
+# Set default stylesheet and override with custom one if present
+styles = ""
+with open("qbar-default.css", 'r') as stylefile:
+    styles = stylefile.read()
+if ARGS.css != None:
+    with open(ARGS.css, 'r') as stylefile_custom:
+        styles += "\n" + stylefile_custom.read()
+    logging.info("Loaded custom stylesheet: '%s'", ARGS.css)
+app.setStyleSheet(styles)
+
+
+
+# Load config file
+import yaml
+with open("qbar-config.yml", 'r') as cfgfile:
+    cfg = yaml.load(cfgfile)
+items = []
+for item_info in cfg:
+    class_name = item_info['type'] + "BarItem"
+    logging.info("Loading item of type: '%s'" % item_info['type'])
+    klass = getattr(sys.modules[__name__], class_name)
+    kwargs = dict(item_info)
+    kwargs.pop('type', None)
+    items += [klass(**kwargs)]
+
+
 # Init bar
-bar = Bar([BatteryBarItem(), WifiBarItem("wlp2s0"), DateTimeBarItem()])
+bar = Bar(items)
 
 # Bar geometry
 desktop = QApplication.desktop()
@@ -52,16 +85,6 @@ for i in range(0, ARGS.screen_index):
 geom = desktop.screenGeometry(ARGS.screen_index)
 bar.setGeometry(x, 0, geom.width(), ARGS.height)
 
-
-# Set default stylesheet and override with custom one if present
-styles = ""
-with open("qbar-default.css") as stylefile:
-    styles = stylefile.read()
-if ARGS.css != None:
-    with open(ARGS.css) as stylefile_custom:
-        styles += "\n" + stylefile_custom.read()
-    logging.info("Loaded custom stylesheet: '%s'", ARGS.css)
-app.setStyleSheet(styles)
 
 # Run!
 bar.show()

@@ -1,0 +1,8 @@
+---
+- type: DateTime
+  format: "%Z %H:%M %d"
+- type: Wifi
+  interface: "wlp2s0"
+- type: Battery
+- type: Simple
+  text: "Hello"

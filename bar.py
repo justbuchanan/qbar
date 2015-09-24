@@ -20,4 +20,3 @@ class Bar(QWidget):
     @property
     def items(self):
         return self._items
-    

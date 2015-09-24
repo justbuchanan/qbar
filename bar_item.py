@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QLabel, QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QLabel, QHBoxLayout, QSpacerItem
 
 
 
@@ -8,8 +8,8 @@ class BarItem(QWidget):
     pass
 
 
-# class SpacerBarItem(QWidget):
-#     pass
+class SpacerBarItem(BarItem):
+    pass
 
 
 class FontAwesomeIcon(QLabel):

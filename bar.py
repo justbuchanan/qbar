@@ -1,6 +1,8 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QApplication, QWidget
 
+from bar_item import *
+
 # Bar that is shown on a single monitor
 class Bar(QWidget):
     def __init__(self, items=[], parent=None):
@@ -12,9 +14,11 @@ class Bar(QWidget):
         # Add bar items
         self._items = items
         layout = QtWidgets.QHBoxLayout()
-        layout.addStretch()
         for item in self.items:
-            layout.addWidget(item)
+            if isinstance(item, SpacerBarItem):
+                layout.addStretch()
+            else:
+                layout.addWidget(item)
         self.setLayout(layout)
 
     @property

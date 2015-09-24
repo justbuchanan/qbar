@@ -5,4 +5,5 @@
   interface: "wlp2s0"
 - type: Battery
 - type: Simple
-  text: "Hello"
+  text: "Airplane"
+  icon: "\uf072"

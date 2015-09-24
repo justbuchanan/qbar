@@ -13,7 +13,7 @@ from bar_item import *
 
 # Exit app on ctrl+c
 def sigint_handler(signal, frame):
-    print("handler")
+    print("\nReceived ctrl+c, exiting...")
     QApplication.quit()
 signal.signal(signal.SIGINT, sigint_handler)
 
@@ -21,7 +21,7 @@ signal.signal(signal.SIGINT, sigint_handler)
 # Command-line arguments
 parser = argparse.ArgumentParser(description="A minimalist and easy-to-use status bar using Qt")
 parser.add_argument(
-    "--screen_index",
+    "--screen",
     type=int,
     default=-1,
     help="Index of the screen to display the bar")
@@ -80,9 +80,9 @@ bar = Bar(items)
 # Bar geometry
 desktop = QApplication.desktop()
 x = 0
-for i in range(0, ARGS.screen_index):
-    x += desktop.screenGeometry(ARGS.screen_index).width()
-geom = desktop.screenGeometry(ARGS.screen_index)
+for i in range(0, ARGS.screen):
+    x += desktop.screenGeometry(ARGS.screen).width()
+geom = desktop.screenGeometry(ARGS.screen)
 bar.setGeometry(x, 0, geom.width(), ARGS.height)
 
 

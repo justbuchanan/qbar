@@ -52,6 +52,11 @@ class SimpleBarItem(QWidget):
     def icon(self, value):
         if self._icon != None:
             self.layout().takeAt(0)
+
+        # If the user passed a string, make a FontAwesomeIcon out of it
+        if isinstance(value, str):
+            value = FontAwesomeIcon(value)
+
         self._icon = value
         if self._icon != None:
             self.layout().insertWidget(0, self._icon)
@@ -76,7 +81,6 @@ class PeriodicBarItem(SimpleBarItem):
 
     def refresh(self):
         pass
-
 
 
 import wifi

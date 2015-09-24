@@ -1,9 +1,12 @@
 
 Bar {
-    color: black;
     background-color: white;
 }
 
+QWidget {
+    color: black;
+}
+
 FontAwesomeIcon {
-    color: blue;
+    color: orange;
 }

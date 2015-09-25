@@ -37,9 +37,7 @@ class SimpleBarItem(BarItem):
             self.layout().takeAt(0)
 
         # If the user passed a string, make a FontAwesomeIcon out of it
-        if isinstance(value, str):
-            value = FontAwesomeIcon(value)
+        self._icon = FontAwesomeIcon(value) if isinstance(value, str) else value
 
-        self._icon = value
         if self._icon != None:
             self.layout().insertWidget(0, self._icon)

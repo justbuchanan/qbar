@@ -46,7 +46,7 @@ class Desktop:
 
     def __eq__(self, other):
         return self.name == other.name and self.state == other.state
-        
+
     def __repr__(self):
         return "Desktop(" + self.name + ", " + str(self.state) + ")"
 
@@ -82,7 +82,7 @@ def parse_bspwm_status(status):
             mon_name = part[1:]
             mon_active = part[0] == "M"
             mon_desktops = []
-        elif part == "LT":
+        elif part in ["LT", "LM"]:
             # ignore layout info for now
             continue
         else:

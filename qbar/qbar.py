@@ -77,7 +77,7 @@ def main():
     for module_name in item_modules:
         importlib.import_module("items.%s" % module_name)
 
-    print("item modules: %s" % str(item_modules))
+    # print("item modules: %s" % str(item_modules))
 
     # Load config file
     try:
@@ -92,7 +92,7 @@ def main():
 
     items = []
     for item_info in cfg:
-        print("item_info: %s" % item_info)
+        # print("item_info: %s" % item_info)
         class_name = item_info['type'] + "BarItem"
         logging.info("Loading item of type: '%s'" % item_info['type'])
 

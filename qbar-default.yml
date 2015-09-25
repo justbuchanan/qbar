@@ -1,4 +1,8 @@
 ---
+- type: Bspwm
+  monitor_index: 0
+- type: Bspwm
+  monitor_index: 1
 - type: Spacer
 - type: DateTime
   format: "%Z %H:%M %d"

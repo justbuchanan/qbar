@@ -6,3 +6,17 @@ Items:
 * bspwm
 * window title
 * launcher items?
+* old icon doesn't seem to be getting removed when setting a new icon
+
+
+Menu functionality
+* easily navigable with keyboard
+*
+
+* hover styles?
+* right click and left click
+
+
+Define actions for items
+
+

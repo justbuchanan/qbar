@@ -1,0 +1,8 @@
+
+
+Items:
+* Make battery item actually work
+* volume
+* bspwm
+* window title
+* launcher items?

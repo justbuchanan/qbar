@@ -1,5 +1,6 @@
 from bar_item import BarItem
-from PyQt5.QtWidgets import QHBoxLayout
+from font_awesome import *
+from PyQt5.QtWidgets import QHBoxLayout, QLabel
 
 
 # Shows an image and a piece of text side-by-side

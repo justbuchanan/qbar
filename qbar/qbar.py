@@ -73,6 +73,9 @@ def main():
 
     # Get a list of the names of the modules containing BarItem subclasses
     item_modules = [tup[1] for tup in pkgutil.iter_modules(['items'])]
+    import importlib
+    for module_name in item_modules:
+        importlib.import_module("items.%s" % module_name)
 
     print("item modules: %s" % str(item_modules))
 
@@ -97,7 +100,8 @@ def main():
             try:
                 mod = getattr(items_module, module_name)
                 klass = getattr(mod, class_name)
-            except KeyError as e:
+                break
+            except AttributeError as e:
                 klass = None
         if klass == None:
             logging.error("Unable to find BarItem of type '%s', ignoring..." % item_info['type'])

@@ -1,4 +1,5 @@
 from items.periodic_bar_item import PeriodicBarItem
+from font_awesome import *
 import power
 
 

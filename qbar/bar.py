@@ -2,6 +2,9 @@ from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QApplication, QWidget
 
 from bar_item import *
+from items.spacer_bar_item import *
+
+
 
 # Bar that is shown on a single monitor
 class Bar(QWidget):

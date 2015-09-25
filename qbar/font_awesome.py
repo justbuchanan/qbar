@@ -11,7 +11,7 @@ FA_CLOCK_O="\uf017"
 class FontAwesomeIcon(QLabel):
     def __init__(self, code):
         super().__init__(code)
-        self.setStylesheet("font: FontAwesome");
+        self.setStyleSheet("font: FontAwesome");
 
     def cssClass(self):
         return QString("FontAwesomeIcon");

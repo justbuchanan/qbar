@@ -1,17 +1,17 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QApplication, QWidget
-import logging
 import argparse
-import signal
-import sys
+import importlib
+import logging
 import os
 import pkgutil
+import signal
+import sys
 import yaml
 
 from qbar import *
 from qbar.bar import Bar
 from qbar.bar_item import *
-
 import qbar.items as items_module
 
 
@@ -68,12 +68,9 @@ def main():
     app.setStyleSheet(styles)
 
 
-
     # Get a list of the names of the modules containing BarItem subclasses
     items_path = os.path.dirname(__file__) + "/items"
     item_modules = [tup[1] for tup in pkgutil.iter_modules([items_path])]
-    print("item modules: %s" % str(item_modules))
-    import importlib
     for module_name in item_modules:
         importlib.import_module("qbar.items.%s" % module_name)
 

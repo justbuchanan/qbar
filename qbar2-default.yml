@@ -1,0 +1,5 @@
+---
+items:
+    - type: Bspwm
+      monitor_index: 1
+    - type: Spacer

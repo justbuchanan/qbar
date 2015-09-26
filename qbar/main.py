@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QApplication, QWidget
 import logging
@@ -11,10 +9,10 @@ import pkgutil
 import yaml
 
 from qbar import *
-from bar import Bar
-from bar_item import *
+from qbar.bar import Bar
+from qbar.bar_item import *
 
-import items as items_module
+import qbar.items as items_module
 
 
 def main():
@@ -72,12 +70,13 @@ def main():
 
 
     # Get a list of the names of the modules containing BarItem subclasses
-    item_modules = [tup[1] for tup in pkgutil.iter_modules(['items'])]
+    items_path = os.path.dirname(__file__) + "/items"
+    item_modules = [tup[1] for tup in pkgutil.iter_modules([items_path])]
+    print("item modules: %s" % str(item_modules))
     import importlib
     for module_name in item_modules:
-        importlib.import_module("items.%s" % module_name)
+        importlib.import_module("qbar.items.%s" % module_name)
 
-    # print("item modules: %s" % str(item_modules))
 
     # Load config file
     try:
@@ -90,12 +89,15 @@ def main():
         with open(fallback_cfgfile_path, 'r') as cfgfile:
             cfg = yaml.load(cfgfile)
 
+    
+
     items = []
-    for item_info in cfg:
+    for item_info in cfg['items']:
         # print("item_info: %s" % item_info)
         class_name = item_info['type'] + "BarItem"
         logging.info("Loading item of type: '%s'" % item_info['type'])
 
+        klass = None
         for module_name in item_modules:
             try:
                 mod = getattr(items_module, module_name)

@@ -1,4 +1,4 @@
-from bar_item import BarItem
+from qbar.bar_item import BarItem
 
 
 # A stretchy spacer

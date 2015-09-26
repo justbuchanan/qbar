@@ -1,5 +1,5 @@
-from bar_item import BarItem
-from font_awesome import *
+from qbar.bar_item import BarItem
+from qbar.font_awesome import *
 from PyQt5.QtWidgets import QHBoxLayout, QLabel
 
 

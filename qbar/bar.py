@@ -1,8 +1,8 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QApplication, QWidget
 
-from bar_item import *
-from items.spacer_bar_item import *
+from qbar.bar_item import *
+from qbar.items.spacer_bar_item import *
 
 
 

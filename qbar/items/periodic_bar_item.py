@@ -1,4 +1,4 @@
-from items.simple_bar_item import SimpleBarItem
+from qbar.items.simple_bar_item import SimpleBarItem
 from PyQt5.QtCore import QTimer
 
 

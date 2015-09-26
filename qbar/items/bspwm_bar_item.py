@@ -1,6 +1,6 @@
-from items.simple_bar_item import *
-from font_awesome import *
-from bspwm_status import *
+from qbar.items.simple_bar_item import *
+from qbar.font_awesome import *
+from qbar.bspwm_status import *
 
 import subprocess
 from threading import Thread

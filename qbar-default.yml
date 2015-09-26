@@ -1,14 +1,11 @@
 ---
-- type: Bspwm
-  monitor_index: 0
-- type: Bspwm
-  monitor_index: 1
-- type: Spacer
-- type: DateTime
-  format: "%Z %H:%M %d"
-- type: Wifi
-  interface: "wlp2s0"
-- type: Battery
-- type: Simple
-  text: "Airplane"
-  icon: "\uf072"
+preexec:
+    - bspc config top_padding 55
+items:
+    - type: Bspwm
+      monitor_index: 1
+    - type: Spacer
+    - type: Wifi
+      interface: "wlp2s0"
+    - type: Battery
+    - type: DateTime

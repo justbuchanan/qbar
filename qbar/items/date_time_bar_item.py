@@ -1,5 +1,5 @@
-from items.periodic_bar_item import PeriodicBarItem
-from font_awesome import *
+from qbar.items.periodic_bar_item import PeriodicBarItem
+from qbar.font_awesome import *
 import time
 
 

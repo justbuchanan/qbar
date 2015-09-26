@@ -3,10 +3,20 @@
 Items:
 * Make battery item actually work
 * volume
-* bspwm
+* cpu
+* memory
+* network up/down
 * window title
 * launcher items?
 * old icon doesn't seem to be getting removed when setting a new icon
+
+* start periodic timers right away
+
+* customize height with css
+
+* autoreload css file.  how about configs?
+
+* ctrl+c only works when there's a timer-based item
 
 
 Menu functionality
@@ -19,4 +29,4 @@ Menu functionality
 
 Define actions for items
 
-
+* multi-monitor

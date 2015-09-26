@@ -11,7 +11,9 @@ FA_CIRCLE_O="\uf10c"
 FA_CODE="\uf121"
 FA_DESKTOP="\uf108"
 FA_PLUG="\uf1e6"
-
+FA_VOLUME_UP="\uf028"
+FA_VOLUME_DOWN="\uf027"
+FA_VOLUME_OFF="\uf026"
 
 
 class FontAwesomeIcon(QLabel):

@@ -10,6 +10,7 @@ FA_CIRCLE="\uf111"
 FA_CIRCLE_O="\uf10c"
 FA_CODE="\uf121"
 FA_DESKTOP="\uf108"
+FA_PLUG="\uf1e6"
 
 
 

@@ -18,6 +18,7 @@ Items:
 
 * ctrl+c only works when there's a timer-based item
 
+appropriate error msg for missing params in config file for bar items
 
 Menu functionality
 * easily navigable with keyboard

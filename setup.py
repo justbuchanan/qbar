@@ -22,6 +22,7 @@ setup(
         'wifi_bar_item': ['wifi'],
         'battery_bar_item': ['power'],
         'cpu_bar_item': ['psutil'],
+        'alsa_volume_bar_item': ['pyalsaaudio'],
     },
     test_suite='nose.collector',
     tests_require=['nose'])

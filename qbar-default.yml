@@ -1,6 +1,4 @@
 ---
-preexec:
-    - bspc config top_padding 55
 items:
     - type: Bspwm
       monitor_index: 1

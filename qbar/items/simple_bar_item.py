@@ -33,8 +33,9 @@ class SimpleBarItem(BarItem):
         return self._icon
     @icon.setter
     def icon(self, value):
+        # Delete old icon if present
         if self._icon != None:
-            self.layout().takeAt(0)
+            self._icon.setParent(None)
 
         # If the user passed a string, make a FontAwesomeIcon out of it
         self._icon = FontAwesomeIcon(value) if isinstance(value, str) else value

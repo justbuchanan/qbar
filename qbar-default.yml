@@ -3,6 +3,8 @@ items:
     - type: Bspwm
       monitor_index: 1
     - type: Spacer
+    - type: WindowTitle
+    - type: Spacer
     - type: AlsaVolume
     - type: Cpu
     - type: Wifi

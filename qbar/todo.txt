@@ -4,8 +4,12 @@ Items:
 * Make battery item actually work
 * memory
 * network up/down
-* window title
+* disk I/O
+* disk usage - red for warning?
 * launcher items?
+
+* make AlsaVolume more configurable
+* PulseVolume item?
 
 * customize height with css
 
@@ -14,6 +18,9 @@ Items:
 * ctrl+c only works when there's a timer-based item
 
 appropriate error msg for missing params in config file for bar items
+
+
+$XDG_CONF
 
 preexec
 

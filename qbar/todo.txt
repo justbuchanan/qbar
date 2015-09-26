@@ -9,8 +9,6 @@ Items:
 * window title
 * launcher items?
 
-* start periodic timers right away
-
 * customize height with css
 
 * autoreload css file.  how about configs?

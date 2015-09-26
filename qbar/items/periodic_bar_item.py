@@ -10,7 +10,7 @@ class PeriodicBarItem(SimpleBarItem):
         self._timer = QTimer(self)
         self._timer.setInterval(interval * 1000) # convert to ms
         self._timer.timeout.connect(self.refresh)
-        self._timer.start()
+        self._timer.start(0)
 
     def refresh(self):
         pass

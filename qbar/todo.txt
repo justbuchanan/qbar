@@ -3,7 +3,6 @@
 Items:
 * Make battery item actually work
 * volume
-* cpu
 * memory
 * network up/down
 * window title

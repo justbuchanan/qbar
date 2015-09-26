@@ -18,6 +18,10 @@ setup(
     classifiers=['Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.4'],
     entry_points={'console_scripts': ['qbar = qbar.main:main']},
-    install_requires=['power', 'wifi', 'psutil'],
+    extra_requires={
+        'wifi_bar_item': ['wifi'],
+        'battery_bar_item': ['power'],
+        'cpu_bar_item': ['psutil'],
+    },
     test_suite='nose.collector',
     tests_require=['nose'])

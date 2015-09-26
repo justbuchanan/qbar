@@ -3,6 +3,7 @@ items:
     - type: Bspwm
       monitor_index: 1
     - type: Spacer
+    - type: Cpu
     - type: Wifi
       interface: "wlp2s0"
     - type: Battery

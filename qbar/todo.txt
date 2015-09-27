@@ -8,12 +8,17 @@ Items:
 * disk usage - red for warning?
 * launcher items?
 
+* be able to center content
+    * the Spacer item doesn't quite work for this
+
 * make AlsaVolume more configurable
 * PulseVolume item?
 
 * customize height with css
 
 * autoreload css file.  how about configs?
+
+* stop immediately on ctrl+c, don't wait for timers to end
 
 * ctrl+c only works when there's a timer-based item
 

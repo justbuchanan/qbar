@@ -1,8 +1,9 @@
 from PyQt5.QtGui import QPainter, QPainterPath
 from PyQt5.QtCore import Qt, QPointF
+from PyQt5.QtWidgets import QWidget, QStyleOption, QStyle
+from PyQt5 import QtCore
 
 from qbar.items.periodic_bar_item import PeriodicBarItem
-# from qbar.font_awesome import *
 import psutil
 import collections
 
@@ -26,6 +27,7 @@ class CpuBarItem(PeriodicBarItem):
 
     # Draws a line graph showing cpu utilization over time
     def paintEvent(self, event):
+        super().paintEvent(event)
         p = QPainter()
         p.begin(self)
         p.setRenderHint(QPainter.Antialiasing)
@@ -43,8 +45,6 @@ class CpuBarItem(PeriodicBarItem):
             i = i + 1
         path.lineTo(path.currentPosition().x(), r.height())
         path.closeSubpath()
-
-        # p.fillRect(r, Qt.gray)
 
         gcolor = Qt.green
         p.setBrush(gcolor)

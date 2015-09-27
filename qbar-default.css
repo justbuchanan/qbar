@@ -11,3 +11,7 @@ QWidget {
 FontAwesomeIcon {
     color: #6abed8;
 }
+
+CpuBarItem {
+    background-color: #1000ff00;
+}

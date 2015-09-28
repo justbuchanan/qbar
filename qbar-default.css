@@ -1,6 +1,8 @@
 
 Bar {
     background-color: #181712;
+    spacing: 10;
+    margin: 10;
 }
 
 QWidget {
@@ -14,9 +16,25 @@ FontAwesomeIcon {
 
 LineGraph {
     min-width: 75;
+    margin: 0;
 }
 
 CpuBarItem LineGraph {
     background-color: #1000ff00;
     color: yellow;
+}
+
+HorizontalBarGraph {
+    min-width: 75;
+}
+
+MulticoreCpuBarItem HorizontalBarGraph {
+    color: yellow;
+    background-color: #10ffff00;
+}
+
+MemoryBarItem HorizontalBarGraph {
+    color: green;
+    background-color: #2a00ff00;
+    max-height: 10;
 }

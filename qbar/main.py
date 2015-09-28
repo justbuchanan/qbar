@@ -1,4 +1,5 @@
 from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtCore import QFileSystemWatcher
 from PyQt5.QtWidgets import QApplication, QWidget
 import argparse
 import importlib
@@ -30,7 +31,7 @@ def load_items_from_config(filepath):
             cfg = yaml.load(cfgfile)
     except FileNotFoundError as e:
         # If the user-specified pat
-        logging.warn("Unable to find user config file, using builtin fallback")
+        # logging.warn("Unable to find user config file, using builtin fallback")
         fallback_cfgfile_path = os.path.abspath(os.path.dirname(__file__)) + "/../qbar-default.yml"
         with open(fallback_cfgfile_path, 'r') as cfgfile:
             cfg = yaml.load(cfgfile)
@@ -58,6 +59,13 @@ def load_items_from_config(filepath):
 
     return items
 
+
+def default_user_config_dir():
+    dirname = 'qbar'
+    if 'XDG_HOME' in os.environ:
+        return os.path.join(os.environ['XDG_HOME'], dirname)
+    else:
+        return "~/.config/%s" % dirname
 
 
 def main():
@@ -90,8 +98,13 @@ def main():
     parser.add_argument(
         "--config",
         "-c",
-        default="~/.config/qbar.yml",
-        help="Congifuration file for qbar written in yaml")
+        default=None,
+        help="Congifuration file for qbar written in yaml.  Looks under $XDG_HOME or .config for qbar/config.yml by default.  if not found, uses a builtin default")
+    parser.add_argument(
+        "--bottom",
+        "-b",
+        default=False,
+        help="Display the bar at the bottom of your monitor")
     ARGS = parser.parse_args()
 
 
@@ -105,22 +118,31 @@ def main():
     css_loader = StyleSheetLoader(stylesheet_files, lambda styles: app.setStyleSheet(styles))
 
     # Init bar
-    bar = Bar(load_items_from_config(ARGS.config))
+
+    def reload_config(filepath):
+        bar.items = load_items_from_config(filepath)
+
+    cfgfile = ARGS.config if ARGS.config != None else default_user_config_dir() + '/config.yml'
+    watcher = QFileSystemWatcher()
+    watcher.addPath(cfgfile)
+    watcher.fileChanged.connect(reload_config)
+    
+    bar = Bar(load_items_from_config(cfgfile))
 
     # Bar geometry
+    # Place it based on the "screen" and "bottom" config variables
     desktop = QApplication.desktop()
     x = 0
-    for i in range(0, ARGS.screen):
-        x += desktop.screenGeometry(ARGS.screen).width()
     geom = desktop.screenGeometry(ARGS.screen)
-    bar.setGeometry(x, 0, geom.width(), ARGS.height)
+    for i in range(0, ARGS.screen):
+        x += geom.width()
+    y = geom.height() - ARGS.height if ARGS.bottom else 0
+    bar.setGeometry(x, y, geom.width(), ARGS.height)
 
     # Run!
     bar.start()
     bar.show()
     ret = app.exec_()
-    print("ret: %d", ret)
-    sys.exit(ret)
 
 
 if __name__ == '__main__':

@@ -10,6 +10,7 @@ class SimpleBarItem(BarItem):
         self._text_widget = QLabel(text)
         layout = QHBoxLayout()
         layout.addWidget(self._text_widget)
+        layout.setContentsMargins(0,0,0,0)
         self.setLayout(layout)
 
         self._icon = None

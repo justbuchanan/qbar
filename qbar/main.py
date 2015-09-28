@@ -11,9 +11,9 @@ import yaml
 
 from qbar import *
 from qbar.bar import Bar
+from qbar.stylesheet_loader import StyleSheetLoader
 from qbar.bar_item import *
 import qbar.items as items_module
-
 
 
 # Returns list of BarItem objects as specified in the config file
@@ -23,7 +23,6 @@ def load_items_from_config(filepath):
     item_modules = [tup[1] for tup in pkgutil.iter_modules([items_path])]
     for module_name in item_modules:
         importlib.import_module("qbar.items.%s" % module_name)
-
 
     # Load config file
     try:
@@ -100,16 +99,10 @@ def main():
     app = QApplication(sys.argv)
 
     # Set default stylesheet and override with custom one if present
-    styles = ""
-    # TODO: what if file doesn't exist?  FileNotFoundError
-    builtin_stylefile = os.path.abspath(os.path.dirname(__file__)) + "/../qbar-default.css"
-    with open(builtin_stylefile, 'r') as stylefile:
-        styles = stylefile.read()
+    stylesheet_files = [os.path.abspath(os.path.dirname(__file__)) + "/../qbar-default.css"]
     if ARGS.css != None:
-        with open(ARGS.css, 'r') as stylefile_custom:
-            styles += "\n" + stylefile_custom.read()
-        logging.info("Loaded custom stylesheet: '%s'", ARGS.css)
-    app.setStyleSheet(styles)
+        stylesheet_files.append(ARGS.css)
+    css_loader = StyleSheetLoader(stylesheet_files, lambda styles: app.setStyleSheet(styles))
 
     # Init bar
     bar = Bar(load_items_from_config(ARGS.config))

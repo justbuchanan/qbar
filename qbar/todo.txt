@@ -25,7 +25,6 @@ Layout:
     * the Spacer item doesn't quite work for this
 Style
 * customize height with css
-* autoreload css file.  how about configs?
 * hover styles?
 
 

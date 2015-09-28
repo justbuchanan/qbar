@@ -1,6 +1,8 @@
 
 Bar {
     background-color: #181712;
+    spacing: 10;
+    margin: 10;
 }
 
 QWidget {
@@ -14,6 +16,7 @@ FontAwesomeIcon {
 
 LineGraph {
     min-width: 75;
+    margin: 0;
 }
 
 CpuBarItem LineGraph {

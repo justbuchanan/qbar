@@ -17,8 +17,10 @@ Items:
 Config
 * config in python instead of yaml?
     * take a look at qtile for inspiration
+    * just a python that defines items
 * appropriate error msg for missing params in config file for bar items
 * $XDG_CONF
+* 
 
 Layout:
 * be able to center content
@@ -26,6 +28,10 @@ Layout:
 Style
 * customize height with css
 * hover styles?
+
+* customizable margins/spacing
+
+* trending up icon - stocks
 
 
 Bugs:
@@ -40,3 +46,13 @@ Other:
 Menu functionality
 * easily navigable with keyboard
 * Define actions for items
+
+
+
+travis-ci button?
+
+open-source widgets for the linux desktop
+
+
+
+

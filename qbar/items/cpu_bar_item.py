@@ -5,6 +5,7 @@ from PyQt5 import QtCore
 
 from qbar.items.periodic_bar_item import PeriodicBarItem
 from qbar.line_graph import LineGraph
+from qbar.font_awesome import *
 import psutil
 import collections
 
@@ -12,11 +13,15 @@ import collections
 
 # Shows a graph of cpu usage over time
 class CpuBarItem(PeriodicBarItem):
+    ## @param datapoints the number of cpu samples to show in the graph
+    #  @param interval how often to sample.
+    #  The time period shown by the graph is 
     def __init__(self, interval=0.5, datapoints=20):
-        super().__init__(icon="CPU", interval=interval)
+        super().__init__(icon="cpu", interval=interval)
         self._history = collections.deque(maxlen=datapoints)
         self._graph = LineGraph(datapoints)
         self.layout().addWidget(self._graph)
+        self.text_widget.setParent(None)
 
 
     # Circular buffer of past cpu usage readings

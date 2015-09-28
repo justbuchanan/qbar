@@ -8,7 +8,8 @@ from qbar.items.spacer_bar_item import *
 
 # Bar that is shown on a single monitor
 class Bar(QWidget):
-    def __init__(self, items=[], parent=None):
+
+    def __init__(self, items=[], parent=None, spacing=20):
         super().__init__(parent)
 
         self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -24,7 +25,9 @@ class Bar(QWidget):
                 layout.addStretch()
             else:
                 layout.addWidget(item)
-        layout.setContentsMargins(0,0,0,0)
+        inset = spacing
+        layout.setContentsMargins(inset,0,inset,0)
+        layout.setSpacing(spacing)
         self.setLayout(layout)
 
     @property

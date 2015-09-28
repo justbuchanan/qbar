@@ -16,10 +16,29 @@ FA_VOLUME_DOWN="\uf027"
 FA_VOLUME_OFF="\uf026"
 
 
+MD_STORAGE="\ue1db"
+MD_NETWORK_WIFI="\ue1ba"
+MD_NETWORK_WIFI_OFF="\ue1da"
+MD_MUSIC_NOTE="\ue405"
+
+MD_VIEW_QUILT="\ue8f1"
+MD_TRENDING_UP="\ue8e5"
+
+# MD_TIMER="\u"
+MD_RADIO_BUTTON_CHECKED="\ue837"
+
 class FontAwesomeIcon(QLabel):
     def __init__(self, code):
         super().__init__(code)
         self.setStyleSheet("font: FontAwesome");
 
-    def cssClass(self):
-        return QString("FontAwesomeIcon");
+    # def cssClasjVs(self):
+    #     return QString("FontAwesomeIcon");
+
+class MaterialDesignIcon(QLabel):
+    def __init__(self, code):
+        super().__init__(code)
+        self.setStyleSheet("font: MaterialIcons-Regular");
+
+    # def cssClass(self):
+    #     return QString("FontAwesomeIcon");

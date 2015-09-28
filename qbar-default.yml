@@ -11,3 +11,8 @@ items:
       interface: "wlp2s0"
     - type: Battery
     - type: DateTime
+
+    - type: Simple
+      icon: MD_TRENDING_UP
+    - type: Simple
+      icon: "\ue8e5"

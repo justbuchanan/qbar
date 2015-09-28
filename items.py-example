@@ -1,0 +1,7 @@
+from qbar import *
+from qbar.font_awesome import *
+
+
+bar = Bar(items=[
+        SimpleBarItem(icon=MD_TRENDING_UP)
+    ])

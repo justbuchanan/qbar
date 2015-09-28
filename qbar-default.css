@@ -12,8 +12,11 @@ FontAwesomeIcon {
     color: #6abed8;
 }
 
+LineGraph {
+    min-width: 75;
+}
+
 CpuBarItem LineGraph {
     background-color: #1000ff00;
     color: yellow;
-    min-width: 75;
 }

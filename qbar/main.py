@@ -15,6 +15,52 @@ from qbar.bar_item import *
 import qbar.items as items_module
 
 
+
+# Returns list of BarItem objects as specified in the config file
+def load_items_from_config(filepath):
+    # Get a list of the names of the modules containing BarItem subclasses
+    items_path = os.path.dirname(__file__) + "/items"
+    item_modules = [tup[1] for tup in pkgutil.iter_modules([items_path])]
+    for module_name in item_modules:
+        importlib.import_module("qbar.items.%s" % module_name)
+
+
+    # Load config file
+    try:
+        with open(filepath, 'r') as cfgfile:
+            cfg = yaml.load(cfgfile)
+    except FileNotFoundError as e:
+        # If the user-specified pat
+        logging.warn("Unable to find user config file, using builtin fallback")
+        fallback_cfgfile_path = os.path.abspath(os.path.dirname(__file__)) + "/../qbar-default.yml"
+        with open(fallback_cfgfile_path, 'r') as cfgfile:
+            cfg = yaml.load(cfgfile)
+
+    items = []
+    for item_info in cfg['items']:
+        class_name = item_info['type'] + "BarItem"
+        logging.info("Loading item of type: '%s'" % item_info['type'])
+
+        klass = None
+        for module_name in item_modules:
+            try:
+                mod = getattr(items_module, module_name)
+                klass = getattr(mod, class_name)
+                break
+            except AttributeError as e:
+                klass = None
+        if klass == None:
+            logging.error("Unable to find BarItem of type '%s', ignoring..." % item_info['type'])
+            continue
+
+        kwargs = dict(item_info)
+        kwargs.pop('type', None)
+        items += [klass(**kwargs)]
+
+    return items
+
+
+
 def main():
     # Exit app on ctrl+c
     def sigint_handler(signal, frame):
@@ -49,15 +95,13 @@ def main():
         help="Congifuration file for qbar written in yaml")
     ARGS = parser.parse_args()
 
-    # logging.basicConfig(level=logging.INFO)
-
 
     # Init app
     app = QApplication(sys.argv)
 
     # Set default stylesheet and override with custom one if present
     styles = ""
-    # TODO: what if file doesn't exist?  FileNotFouondError
+    # TODO: what if file doesn't exist?  FileNotFoundError
     builtin_stylefile = os.path.abspath(os.path.dirname(__file__)) + "/../qbar-default.css"
     with open(builtin_stylefile, 'r') as stylefile:
         styles = stylefile.read()
@@ -67,52 +111,8 @@ def main():
         logging.info("Loaded custom stylesheet: '%s'", ARGS.css)
     app.setStyleSheet(styles)
 
-
-    # Get a list of the names of the modules containing BarItem subclasses
-    items_path = os.path.dirname(__file__) + "/items"
-    item_modules = [tup[1] for tup in pkgutil.iter_modules([items_path])]
-    for module_name in item_modules:
-        importlib.import_module("qbar.items.%s" % module_name)
-
-
-    # Load config file
-    try:
-        with open(ARGS.config, 'r') as cfgfile:
-            cfg = yaml.load(cfgfile)
-    except FileNotFoundError as e:
-        # If the user-specified pat
-        logging.warn("Unable to find user config file, using builtin fallback")
-        fallback_cfgfile_path = os.path.abspath(os.path.dirname(__file__)) + "/../qbar-default.yml"
-        with open(fallback_cfgfile_path, 'r') as cfgfile:
-            cfg = yaml.load(cfgfile)
-
-    
-
-    items = []
-    for item_info in cfg['items']:
-        # print("item_info: %s" % item_info)
-        class_name = item_info['type'] + "BarItem"
-        logging.info("Loading item of type: '%s'" % item_info['type'])
-
-        klass = None
-        for module_name in item_modules:
-            try:
-                mod = getattr(items_module, module_name)
-                klass = getattr(mod, class_name)
-                break
-            except AttributeError as e:
-                klass = None
-        if klass == None:
-            logging.error("Unable to find BarItem of type '%s', ignoring..." % item_info['type'])
-            continue
-
-        kwargs = dict(item_info)
-        kwargs.pop('type', None)
-        items += [klass(**kwargs)]
-
-
     # Init bar
-    bar = Bar(items)
+    bar = Bar(load_items_from_config(ARGS.config))
 
     # Bar geometry
     desktop = QApplication.desktop()
@@ -122,11 +122,12 @@ def main():
     geom = desktop.screenGeometry(ARGS.screen)
     bar.setGeometry(x, 0, geom.width(), ARGS.height)
 
-
     # Run!
     bar.start()
     bar.show()
-    sys.exit(app.exec_())
+    ret = app.exec_()
+    print("ret: %d", ret)
+    sys.exit(ret)
 
 
 if __name__ == '__main__':

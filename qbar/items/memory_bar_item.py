@@ -9,10 +9,12 @@ from qbar.font_awesome import *
 import psutil
 import collections
 
+from qbar.masked_icon import *
+
 
 class MemoryBarItem(PeriodicBarItem):
     def __init__(self, interval=2):
-        super().__init__(icon="ram", interval=interval)
+        super().__init__(icon=MaskedImageIcon('ram.png'), interval=interval)
         self._graph = HorizontalBarGraph()
         self.layout().insertWidget(1, self._graph)
         # self.text_widget.setParent(None)

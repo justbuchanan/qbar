@@ -8,18 +8,15 @@ class MaskedImageIcon(QLabel):
     def __init__(self, iconfile):
         super().__init__()
         # TODO: on-the fly sizing
-        img = QImage(iconfile)
-        self._mask = QBitmap(QPixmap.fromImage(img.createAlphaMask()))
+        # img = QImage(iconfile).scaled(QSize(30, 30))
+        # print("img: " + str(img))
+        # self._mask = QBitmap(QPixmap.fromImage(img.createAlphaMask()))
+
+        img = QImage(iconfile).scaled(QSize(15, 15))
+        # print("img: " + str(img))
+        # self._mask = QBitmap(QPixmap.fromImage(img.createAlphaMask()))
+        self.setPixmap(QBitmap(QPixmap.fromImage(img.createAlphaMask())))
+        # self.resize(30, 30)
+        # self.resize(30, 30)
 
 
-    def paintEvent(self, event):
-        styleOpt = QStyleOption()
-        styleOpt.initFrom(self)
-        p = QPainter(self)
-        p.setRenderHint(QPainter.Antialiasing)
-        p.setClipRegion(QRegion(self._mask))
-
-        gcolor = styleOpt.palette.color(QPalette.Text)
-        p.setBrush(gcolor)
-        p.setPen(gcolor)
-        p.drawRect(self.rect())

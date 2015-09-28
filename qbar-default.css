@@ -10,7 +10,7 @@ QWidget {
     color: white;
 }
 
-FontAwesomeIcon {
+FontAwesomeIcon, MaskedImageIcon {
     color: #6abed8;
 }
 

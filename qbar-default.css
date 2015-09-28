@@ -21,5 +21,20 @@ LineGraph {
 
 CpuBarItem LineGraph {
     background-color: #1000ff00;
-    color: pink;
+    color: yellow;
+}
+
+HorizontalBarGraph {
+    min-width: 75;
+}
+
+MulticoreCpuBarItem HorizontalBarGraph {
+    color: yellow;
+    background-color: #10ffff00;
+}
+
+MemoryBarItem HorizontalBarGraph {
+    color: green;
+    background-color: #2a00ff00;
+    max-height: 10;
 }

@@ -9,6 +9,8 @@ from qbar.font_awesome import *
 import psutil
 import collections
 
+from qbar.masked_icon import *
+
 
 
 # Shows a graph of cpu usage over time
@@ -17,7 +19,7 @@ class CpuBarItem(PeriodicBarItem):
     #  @param interval how often to sample.
     #  The time period shown by the graph is 
     def __init__(self, interval=0.5, datapoints=20):
-        super().__init__(icon="cpu", interval=interval)
+        super().__init__(icon=MaskedImageIcon("cpu.png"), interval=interval)
         self._history = collections.deque(maxlen=datapoints)
         self._graph = LineGraph(datapoints)
         self.layout().addWidget(self._graph)

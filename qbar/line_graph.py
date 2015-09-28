@@ -8,7 +8,7 @@ class LineGraph(QWidget):
     def __init__(self, datapoints):
         super().__init__()
         self._datapoints = datapoints
-        self.setMinimumSize(QSize(20, 10))
+        self.setMinimumSize(10, 2)
 
     # A collection of values between 0 and 1 to draw on the graph.  The values
     # are ordered from oldest to newest.

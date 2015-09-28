@@ -2,7 +2,6 @@
 
 Items:
 * Make battery item actually work
-* memory
 * network up/down
 * disk I/O
 * disk usage - red for warning?
@@ -13,13 +12,24 @@ Items:
 * Bspwm improvements
     * if no screen specified, use the one the bar is on
     * 
+* spotify visualizer
+
+* window-manager aware?  how to auto-pad to account for the bar?
+
+* image files for icons?
+    * auto-turn it into a single-color icon using a mask
+* CI status indicator.  Give it a list of projects on circleci or travis-ci to check.  only be good if all are good, show a dropdown list with the broken builds at the top.  say when it was last checked and have a button to refresh.
+
+
+* current cpu speed as in htop would be good for multiple cores
+
+
 
 Config
 * config in python instead of yaml?
     * take a look at qtile for inspiration
     * just a python that defines items
 * appropriate error msg for missing params in config file for bar items
-* $XDG_CONF
 * set icons for things through css
 
 Layout:
@@ -30,9 +40,6 @@ Style
 * hover styles?
 
 * customizable margins/spacing
-
-* trending up icon - stocks
-
 
 Bugs:
 * stop immediately on ctrl+c, don't wait for timers to end
@@ -52,7 +59,3 @@ Menu functionality
 travis-ci button?
 
 open-source widgets for the linux desktop
-
-
-
-

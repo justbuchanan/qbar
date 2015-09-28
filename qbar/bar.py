@@ -14,30 +14,67 @@ class Bar(QWidget):
 
         self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
+        self._spacing = spacing
+
         # Stay on top of other windows
         self.setWindowFlags(QtCore.Qt.X11BypassWindowManagerHint)
 
-        # Add bar items
-        self._items = items
+        # We're not running until a call to start() has been made
+        self._running = False
+
+        # setup layout
         layout = QtWidgets.QHBoxLayout()
-        for item in self.items:
-            if isinstance(item, SpacerBarItem):
-                layout.addStretch()
-            else:
-                layout.addWidget(item)
-        inset = spacing
+        inset = self.spacing
         layout.setContentsMargins(inset,0,inset,0)
-        layout.setSpacing(spacing)
+        layout.setSpacing(self.spacing)
         self.setLayout(layout)
+
+        # Add bar items
+        self.items = items
+
+    @property
+    def spacing(self):
+        return self._spacing
+    
+
+    @property
+    def running(self):
+        return self._running
+    
 
     @property
     def items(self):
         return self._items
+    @items.setter
+    def items(self, values):
+        if self.running:
+            # turn off the current items
+            if self.items != None:
+                for item in self.items: item.stop()
+            # start the new items running
+            if values != None:
+                for item in values: item.start()
+
+        # remove old items
+        while self.layout().count():
+            w = self.layout().takeAt(0).widget()
+            if w != None:
+                w.setParent(None)
+
+        self._items = values
+
+        for item in self.items:
+            if isinstance(item, SpacerBarItem):
+                self.layout().addStretch()
+            else:
+                self.layout().addWidget(item)
 
     def start(self):
         for item in self.items:
             item.start()
+        self._running = True
 
     def stop(self):
         for item in self.items:
             item.stop()
+        self._running = False

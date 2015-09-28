@@ -12,7 +12,18 @@ items:
     - type: Battery
     - type: DateTime
 
-    - type: Simple
-      icon: MD_TRENDING_UP
-    - type: Simple
-      icon: "\ue8e5"
+    # - type: Simple
+      # icon: "\ue8e5"
+    # - type: Simple
+    #   icon: "\ue8f1"
+    #   text: bspwm
+    # - type: Simple
+    #   icon: "\ue837"
+    #   text: circle
+    # - type: Simple
+    #   icon: "\ue1ba"
+    #   text: wifimd
+
+    # - type: Simple
+    #   icon: "\ue42b"
+    #   text: md

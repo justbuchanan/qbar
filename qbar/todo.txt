@@ -20,7 +20,7 @@ Config
     * just a python that defines items
 * appropriate error msg for missing params in config file for bar items
 * $XDG_CONF
-* 
+* set icons for things through css
 
 Layout:
 * be able to center content

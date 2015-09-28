@@ -24,6 +24,9 @@ MD_MUSIC_NOTE="\ue405"
 MD_VIEW_QUILT="\ue8f1"
 MD_TRENDING_UP="\ue8e5"
 
+MD_TUNE="\ue429"    # looks like knobs 
+MD_VIEW_COMPACT="\ue42b"
+
 # MD_TIMER="\u"
 MD_RADIO_BUTTON_CHECKED="\ue837"
 

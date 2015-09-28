@@ -7,36 +7,37 @@ Items:
 * disk I/O
 * disk usage - red for warning?
 * launcher items?
+* Audio/Volume
+    * make AlsaVolume more configurable
+    * PulseVolume item?
+* Bspwm improvements
+    * if no screen specified, use the one the bar is on
+    * 
 
+Config
+* config in python instead of yaml?
+    * take a look at qtile for inspiration
+* appropriate error msg for missing params in config file for bar items
+* $XDG_CONF
+
+Layout:
 * be able to center content
     * the Spacer item doesn't quite work for this
-
-* make AlsaVolume more configurable
-* PulseVolume item?
-
+Style
 * customize height with css
-
 * autoreload css file.  how about configs?
+* hover styles?
 
+
+Bugs:
 * stop immediately on ctrl+c, don't wait for timers to end
-
 * ctrl+c only works when there's a timer-based item
 
-appropriate error msg for missing params in config file for bar items
-
-
-$XDG_CONF
-
-preexec
+Other:
+* preexec?
+* right click and left click
+* multi-monitor
 
 Menu functionality
 * easily navigable with keyboard
-*
-
-* hover styles?
-* right click and left click
-
-
-Define actions for items
-
-* multi-monitor
+* Define actions for items

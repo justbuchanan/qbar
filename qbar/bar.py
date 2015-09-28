@@ -27,3 +27,11 @@ class Bar(QWidget):
     @property
     def items(self):
         return self._items
+
+    def start(self):
+        for item in self.items:
+            item.start()
+
+    def stop(self):
+        for item in self.items:
+            item.stop()

@@ -7,11 +7,22 @@ class PeriodicBarItem(SimpleBarItem):
     ## @interval is in seconds (may be partial)
     def __init__(self, icon=None, text="", interval=2):
         super().__init__(icon, text)
+        self._interval = interval
+
+    @property
+    def interval(self):
+        return self._interval
+    
+    def start(self):
         self._timer = QTimer(self)
-        self._timer.setInterval(interval * 1000) # convert to ms
+        self._timer.setInterval(self.interval * 1000) # convert to ms
         self._timer.timeout.connect(self.refresh)
         self._timer.start()
         self.refresh()
+
+    def stop(self):
+        self._timer.stop()
+        self._timer = None
 
     def refresh(self):
         pass

@@ -124,6 +124,7 @@ def main():
 
 
     # Run!
+    bar.start()
     bar.show()
     sys.exit(app.exec_())
 

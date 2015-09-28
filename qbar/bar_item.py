@@ -5,6 +5,12 @@ from qbar.font_awesome import *
 
 # Abstract superclass for all items that appear in the Bar.
 class BarItem(QWidget):
+
+    def start(self):
+        pass
+    def stop(self):
+        pass
+
     ## Override paintEvent() so css works as expected
     ## Subclasses should call this implementation before doing custom drawing
     def paintEvent(self, event):

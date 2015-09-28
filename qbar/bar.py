@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import QApplication, QWidget, QSizePolicy
 
 from qbar.bar_item import *
 from qbar.items.spacer_bar_item import *
@@ -10,6 +10,8 @@ from qbar.items.spacer_bar_item import *
 class Bar(QWidget):
     def __init__(self, items=[], parent=None):
         super().__init__(parent)
+
+        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
         # Stay on top of other windows
         self.setWindowFlags(QtCore.Qt.X11BypassWindowManagerHint)
@@ -22,6 +24,7 @@ class Bar(QWidget):
                 layout.addStretch()
             else:
                 layout.addWidget(item)
+        layout.setContentsMargins(0,0,0,0)
         self.setLayout(layout)
 
     @property

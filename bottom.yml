@@ -1,10 +1,15 @@
 ---
 items:
-    - type: Bspwm
-      monitor_index: 1
+    # - type: Bspwm
+      # monitor_index: 1
     - type: Spacer
-    - type: Simple
-      icon: "\ue42b"
-    - text: stocks
-      type: Simple
-      icon: "\ue8e5"
+    # - type: Simple
+      # icon: "\ue42b"
+    # - text: stocks
+      # type: Simple
+      # icon: "\ue8e5"
+    - type: Memory
+    - type: Cpu
+    - type: MulticoreCpu
+    # - type: Spacer
+    #   interval: 0.2

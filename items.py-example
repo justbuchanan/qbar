@@ -4,5 +4,7 @@ from qbar.font_awesome import *
 
 items = [
     SimpleBarItem(icon=MD_TRENDING_UP, text='stocks'),
-    BspwmBarItem()
+    BspwmBarItem(monitor_index=0),
+    SpacerBarItem(),
+    AlsaVolumeBarItem(),
 ]

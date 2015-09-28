@@ -10,7 +10,7 @@ QWidget {
     color: white;
 }
 
-FontAwesomeIcon {
+FontAwesomeIcon, MaskedImageIcon {
     color: #6abed8;
 }
 
@@ -21,7 +21,7 @@ LineGraph {
 
 CpuBarItem LineGraph {
     background-color: #1000ff00;
-    color: yellow;
+    color: green;
 }
 
 HorizontalBarGraph {
@@ -29,7 +29,7 @@ HorizontalBarGraph {
 }
 
 MulticoreCpuBarItem HorizontalBarGraph {
-    color: yellow;
+    color: green;
     background-color: #10ffff00;
 }
 

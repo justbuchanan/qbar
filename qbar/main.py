@@ -69,13 +69,6 @@ def default_user_config_dir():
 
 
 def main():
-    # Exit app on ctrl+c
-    def sigint_handler(signal, frame):
-        print("\nReceived ctrl+c, exiting...")
-        QApplication.quit()
-    signal.signal(signal.SIGINT, sigint_handler)
-
-
     # Command-line arguments
     parser = argparse.ArgumentParser(description="A minimalist and easy-to-use status bar using Qt")
     parser.add_argument(
@@ -117,18 +110,19 @@ def main():
         stylesheet_files.append(ARGS.css)
     css_loader = StyleSheetLoader(stylesheet_files, lambda styles: app.setStyleSheet(styles))
 
-    # Init bar
+    # create the bar
+    bar = Bar()
 
     def reload_config(filepath):
         bar.items = load_items_from_config(filepath)
 
+    # Load config file and set it up to reload whenever the file changes
     cfgfile = ARGS.config if ARGS.config != None else default_user_config_dir() + '/config.yml'
     watcher = QFileSystemWatcher()
     watcher.addPath(cfgfile)
     watcher.fileChanged.connect(reload_config)
+    reload_config(cfgfile)
     
-    bar = Bar(load_items_from_config(cfgfile))
-
     # Bar geometry
     # Place it based on the "screen" and "bottom" config variables
     desktop = QApplication.desktop()
@@ -142,6 +136,14 @@ def main():
     # Run!
     bar.start()
     bar.show()
+
+    # Exit app on ctrl+c
+    def sigint_handler(signal, frame):
+        print("\nReceived ctrl+c, exiting...")
+        bar.stop()
+        QApplication.quit()
+    signal.signal(signal.SIGINT, sigint_handler)
+
     ret = app.exec_()
 
 

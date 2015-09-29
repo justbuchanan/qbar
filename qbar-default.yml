@@ -5,11 +5,14 @@ items:
     - type: Spacer
     - type: WindowTitle
     - type: Spacer
+    - type: Weather
     - type: AlsaVolume
     - type: Wifi
       interface: "wlp2s0"
     - type: Battery
     - type: DateTime
+
+
 
     # - type: Simple
 

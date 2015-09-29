@@ -21,9 +21,11 @@ Items:
 
 * window-manager aware?  how to auto-pad to account for the bar?
 
-* image files for icons?
-    * auto-turn it into a single-color icon using a mask
 * CI status indicator.  Give it a list of projects on circleci or travis-ci to check.  only be good if all are good, show a dropdown list with the broken builds at the top.  say when it was last checked and have a button to refresh.
+
+
+* resolve the screen index mismatch between qt and bspwm
+
 
 
 Config
@@ -57,6 +59,7 @@ Other:
 * right click and left click
 * multi-monitor
 * stylable Separator Items between main items?
+* graceful shutdown
 
 Menu functionality
 * easily navigable with keyboard
@@ -67,4 +70,10 @@ Testing:
 * test geometry?
 * start/stop?
 
-open-source widgets for the linux desktop
+
+Semi-relevant ideas:
+* widgets for the minimalist linux desktop
+* weather widget - what api?
+* transparent, but sample background?  for bar
+* draw swap and mem in the same bar graph?
+* logout, reboot, shutdown buttom / menu in the corner

@@ -2,6 +2,10 @@
 items:
     # - type: Bspwm
       # monitor_index: 1
+    # - type: WindowTitle
+    - type: Spacer
+    - type: DesktopTitle
+      monitor_index: 1
     - type: Spacer
     # - type: Simple
       # icon: "\ue42b"

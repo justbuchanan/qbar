@@ -30,11 +30,12 @@ HorizontalBarGraph {
 
 MulticoreCpuBarItem HorizontalBarGraph {
     color: green;
+    /*color: orange;*/
     background-color: #10ffff00;
 }
 
 MemoryBarItem HorizontalBarGraph {
     color: green;
     background-color: #2a00ff00;
-    max-height: 10;
+    max-height: 15;
 }

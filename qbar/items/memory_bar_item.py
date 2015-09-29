@@ -13,21 +13,33 @@ from qbar.masked_icon import *
 
 
 class MemoryBarItem(PeriodicBarItem):
-    def __init__(self,icon=MaskedImageIcon('ram3.png'), interval=2):
+    def __init__(self,icon=MaskedImageIcon('ram3.png'), interval=2, show_swap=False):
         super().__init__(icon=icon, interval=interval)
         self._graph = HorizontalBarGraph()
         self.layout().insertWidget(1, self._graph)
+        self._show_swap = show_swap
         # self.text_widget.setParent(None)
 
-    def refresh(self):
-        mem = psutil.virtual_memory()
+    @property
+    def show_swap(self):
+        return self._show_swap
+    
 
+    def refresh(self):
+        values = []
+
+        mem = psutil.virtual_memory()
         gb = 1024**3
         used = mem.used / gb
         total = mem.total / gb
         pct = used / total 
-
-        pct = mem.percent / 100
+        pct = float(mem.percent) / 100.0
+        values.append(pct)
         # self.text = "%.1f / %.1fgb" % (used, total)
 
-        self._graph.values = [pct]
+        if self.show_swap:
+            swap = psutil.swap_memory()
+            swap_pct = float(swap.percent) / 100.0
+            values.append(swap_pct)
+
+        self._graph.values = values

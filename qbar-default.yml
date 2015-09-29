@@ -5,9 +5,6 @@ items:
     - type: Spacer
     - type: WindowTitle
     - type: Spacer
-    - type: Memory
-    - type: Cpu
-    - type: MulticoreCpu
     - type: AlsaVolume
     - type: Wifi
       interface: "wlp2s0"
@@ -24,7 +21,7 @@ items:
     #   icon: "\ue837"
     #   text: circle
     # - type: Simple
-      # icon: "\ue1ba"
+    #   icon: "\ue1ba"
     #   text: wifimd
 
     # - type: Simple

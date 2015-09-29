@@ -13,8 +13,8 @@ from qbar.masked_icon import *
 
 
 class MemoryBarItem(PeriodicBarItem):
-    def __init__(self, interval=2):
-        super().__init__(icon=MaskedImageIcon('ram.png'), interval=interval)
+    def __init__(self,icon=MaskedImageIcon('ram3.png'), interval=2):
+        super().__init__(icon=icon, interval=interval)
         self._graph = HorizontalBarGraph()
         self.layout().insertWidget(1, self._graph)
         # self.text_widget.setParent(None)
@@ -25,11 +25,9 @@ class MemoryBarItem(PeriodicBarItem):
         gb = 1024**3
         used = mem.used / gb
         total = mem.total / gb
-
         pct = used / total 
 
         pct = mem.percent / 100
         # self.text = "%.1f / %.1fgb" % (used, total)
 
         self._graph.values = [pct]
-

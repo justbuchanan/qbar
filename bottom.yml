@@ -8,7 +8,7 @@ items:
       monitor_index: 1
     - type: Spacer
     # - type: Simple
-      # icon: "\ue42b"
+    #   icon: "\ue42b"
     # - text: stocks
       # type: Simple
       # icon: "\ue8e5"

@@ -5,10 +5,37 @@ import sys
 import subprocess as sp
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 
-
+# app = QGuiApplication([])
+# print("started app")
 app = QApplication([])
 desktop = QApplication.desktop()
+
+
+# for screen in app.screens():
+#     print("desktop name: %s" % str(screen.name))
+
+# TODO: do intelligent info with these things
+# app.screenAdded.connect(lambda screen: "Screen added: %s" % str(screen))
+# app.screenRemoved.connect(lambda screen: "Screen removed: %s" % str(screen))
+
+
+# for i in range(desktop.screenCount()):
+#     print("desktop name: %s" % str(desktop.screen(i)))
+
+
+desktop_names = {
+    "DP1": [
+        "jb", "src", "rc"
+    ],
+    "eDP1": [
+        "web", "chat", "sys"
+    ]
+}
+for monitor_name, desktops in desktop_names.items():
+    os.system("bspc monitor %s -d %s" % (monitor_name, " ".join(["\"%s\"" % d for d in desktops])))
+
 
 bars = []
 

@@ -27,6 +27,13 @@ Items:
 * resolve the screen index mismatch between qt and bspwm
 
 
+* unify desktop naming
+
+
+Implement bspwm reloading:
+https://github.com/baskerville/bspwm/tree/master/examples/loop
+
+
 
 Config
 * config in python instead of yaml?

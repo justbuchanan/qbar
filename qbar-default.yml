@@ -1,7 +1,7 @@
 ---
 items:
     - type: Bspwm
-      monitor_index: 0
+      monitor_index: 1
     - type: Spacer
     - type: WindowTitle
     - type: Spacer

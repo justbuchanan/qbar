@@ -1,5 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWidgets import QApplication, QWidget, QSizePolicy
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 from qbar.bar_item import *
 from qbar.items.spacer_bar_item import *
@@ -9,15 +11,18 @@ from qbar.items.spacer_bar_item import *
 # Bar that is shown on a single monitor
 class Bar(QWidget):
 
-    def __init__(self, items=[], parent=None, spacing=20):
+    def __init__(self, items=[], parent=None, spacing=15):
         super().__init__(parent)
+
+        self.setFocusPolicy(Qt.StrongFocus)
 
         self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
         self._spacing = spacing
 
         # Stay on top of other windows
-        self.setWindowFlags(QtCore.Qt.X11BypassWindowManagerHint)
+        flags = QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.X11BypassWindowManagerHint
+        self.setWindowFlags(flags)
 
         # We're not running until a call to start() has been made
         self._running = False

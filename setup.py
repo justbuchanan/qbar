@@ -4,7 +4,7 @@ import qbar
 setup(
     name='qbar',
     packages=['qbar', 'qbar.items'],
-    data_files=['qbar-default.css', 'qbar-default.yml'],
+    data_files=['configs/qbar-default.css', 'configs/qbar-default.yml'],
     version=qbar.__version__,
     description=
     'An easily-configurable and flexible status bar for Linux',
@@ -15,9 +15,15 @@ setup(
     maintainer='Justin Buchanan',
     maintainer_email='justbuchanan@gmail',
     url='https://github.com/justbuchanan/qbar',
-    classifiers=['Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.4'],
+    classifiers=[
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Development Status :: 3 - Alpha',
+    ],
     entry_points={'console_scripts': ['qbar = qbar.main:main']},
+    install_requires=[
+        'shutil',
+    ],
     extra_requires={
         'wifi_bar_item': ['wifi'],
         'battery_bar_item': ['power'],

@@ -8,21 +8,24 @@ class PeriodicBarItem(SimpleBarItem):
     def __init__(self, icon=None, text="", interval=2):
         super().__init__(icon, text)
         self._interval = interval
+        self._timer = None
 
     @property
     def interval(self):
         return self._interval
     
     def start(self):
-        self._timer = QTimer(self)
-        self._timer.setInterval(self.interval * 1000) # convert to ms
-        self._timer.timeout.connect(self.refresh)
-        self._timer.start()
-        self.refresh()
+        if not self._timer:
+            self._timer = QTimer(self)
+            self._timer.setInterval(self.interval * 1000) # convert to ms
+            self._timer.timeout.connect(self.refresh)
+            self._timer.start()
+            self.refresh()
 
     def stop(self):
-        self._timer.stop()
-        self._timer = None
+        if self._timer:
+            self._timer.stop()
+            self._timer = None
 
     def refresh(self):
         pass

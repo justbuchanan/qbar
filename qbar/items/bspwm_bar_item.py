@@ -7,7 +7,7 @@ from threading import Thread
 
 
 class BspwmBarItem(SimpleBarItem):
-    def __init__(self, icon=FA_DESKTOP, monitor_index=0):
+    def __init__(self, icon=None, monitor_index=0):
         super().__init__(icon, "monitor %d" % monitor_index)
         self._monitor_index = monitor_index
 
@@ -18,14 +18,41 @@ class BspwmBarItem(SimpleBarItem):
 
     def run(self):
         for line in self._proc.stdout:
+            # repr_by_state = {
+            #     Desktop.State.FocusedOccupied: '<font color=#6abed8>■</font>',
+            #     Desktop.State.FocusedFree: '<font color=#6abed8>■</font>',
+            #     Desktop.State.FocusedUrgent: '<font color=#6abed8>■</font>',
+            #     Desktop.State.Occupied: '▣',
+            #     Desktop.State.Free: '□',
+            #     Desktop.State.Urgent: '<font color="orange">■</font>'
+            # }
+            # repr_by_state = {
+            #     Desktop.State.FocusedOccupied: '■',
+            #     Desktop.State.FocusedFree: '■',
+            #     Desktop.State.FocusedUrgent: '■',
+            #     Desktop.State.Occupied: '▣',
+            #     Desktop.State.Free: '□',
+            #     Desktop.State.Urgent: '■'
+            # # }
+            # repr_by_state = {
+            #     Desktop.State.FocusedOccupied: '■',
+            #     Desktop.State.FocusedFree: '■',
+            #     Desktop.State.FocusedUrgent: '■',
+            #     Desktop.State.Occupied: '▪',
+            #     Desktop.State.Free: '▫',
+            #     Desktop.State.Urgent: '▪'
+            # }
+
             repr_by_state = {
                 Desktop.State.FocusedOccupied: '●',
                 Desktop.State.FocusedFree: '●',
                 Desktop.State.FocusedUrgent: '●',
-                Desktop.State.Occupied: '⊙',
+                Desktop.State.Occupied: '◉',
                 Desktop.State.Free: '○',
-                Desktop.State.Urgent: '<font color="orange">○</font>'
+                Desktop.State.Urgent: '●'
             }
+
+
 
             wm_info = parse_bspwm_status(line.rstrip().decode('utf-8'))
             monitor = wm_info[self.monitor_index]

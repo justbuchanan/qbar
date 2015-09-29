@@ -5,10 +5,9 @@ import re
 
 
 class WifiBarItem(PeriodicBarItem):
-    def __init__(self, interface, interval=2):
-        super().__init__(FontAwesomeIcon(FA_SIGNAL_WIFI_OFF), "WiFi", interval)
+    def __init__(self, interface, icon=FA_SIGNAL_WIFI_OFF, interval=2):
+        super().__init__(icon=icon, text="WiFi", interval=interval)
         self._interface = interface
-
 
     def refresh(self):
         try:
@@ -30,8 +29,6 @@ class WifiBarItem(PeriodicBarItem):
             self.icon = FontAwesomeIcon(FA_SIGNAL_WIFI_OFF)
             self.text = "Scanning..."
 
-
     @property
     def interface(self):
         return self._interface
-

@@ -1,8 +1,15 @@
 
 Bar {
     background-color: #181712;
+}
+
+Bar {
     spacing: 10;
     margin: 10;
+}
+
+BarItem {
+    color: white;
 }
 
 QWidget {
@@ -20,7 +27,7 @@ LineGraph {
 }
 
 CpuBarItem LineGraph {
-    background-color: #1000ff00;
+    background-color: #10ffff00;
     color: green;
 }
 
@@ -30,11 +37,11 @@ HorizontalBarGraph {
 
 MulticoreCpuBarItem HorizontalBarGraph {
     color: green;
-    background-color: #10ffff00;
+    background-color: #20ffff00;
 }
 
 MemoryBarItem HorizontalBarGraph {
     color: green;
-    background-color: #2a00ff00;
-    max-height: 10;
+    background-color: #20ffff00;
+    max-height: 15;
 }

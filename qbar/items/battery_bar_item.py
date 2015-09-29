@@ -6,8 +6,8 @@ import os
 
 class BatteryBarItem(PeriodicBarItem):
     ## @supply_name The filename under /sys/class/ for the battery we're interested in
-    def __init__(self, supply_name='BAT0', interval=2):
-        super().__init__(FontAwesomeIcon(FA_BATTERY_FULL), "Battery", interval)
+    def __init__(self, icon=FA_BATTERY_FULL, supply_name='BAT0', interval=2):
+        super().__init__(icon, "Battery", interval)
         self._supply_name = supply_name
 
     @property
@@ -16,7 +16,7 @@ class BatteryBarItem(PeriodicBarItem):
     
     def refresh(self):
         power_type = power.PowerManagement().get_providing_power_source_type()
-        charging = power_type == power.POWER_TYPE_AC
+        charging = (power_type == power.POWER_TYPE_AC)
 
         # supply_path = os.path.join("/sys/class/power_supply", self.supply_name)
         # energy_full, energy_now, power_now = power.PowerManagement.get_battery_state(supply_path)

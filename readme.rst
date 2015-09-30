@@ -1,7 +1,16 @@
 qbar |pypi_version| |circleci_button|
 =====================================
 
-An easily-configurable status bar.
+An easily-configurable status bar for Linux.
+
+
+Goals
+-----
+* Easily configurable.
+* Solid builtin selection of bar items.
+* Easily add custom bar items.
+* Pretty.
+* Good multi-monitor support.
 
 
 .. |pypi_version| image:: https://img.shields.io/pypi/v/qbar.svg

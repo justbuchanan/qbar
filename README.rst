@@ -16,6 +16,12 @@ Features
 --------
 * Automatically detects changes to configuration and style files and updates bar immediately.
 
+Dependencies
+------------
+* Qt5
+* PyQt5
+* xtitle
+
 
 .. |pypi_version| image:: https://img.shields.io/pypi/v/qbar.svg
             :target: https://pypi.python.org/pypi/qbar

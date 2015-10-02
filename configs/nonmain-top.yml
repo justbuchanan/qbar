@@ -1,6 +1,0 @@
----
-items:
-    - type: Bspwm
-    - type: Spacer
-    - type: WindowTitle
-    - type: Spacer

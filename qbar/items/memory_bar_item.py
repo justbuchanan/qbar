@@ -13,8 +13,10 @@ from qbar.masked_icon import *
 
 
 class MemoryBarItem(PeriodicBarItem):
-    def __init__(self,icon=MaskedImageIcon('images/ram3.png'), interval=2, show_swap=False):
+    def __init__(self,icon=None, interval=2, show_swap=False):
         super().__init__(icon=icon, interval=interval)
+        if icon == None:
+            icon = MaskedImageIcon('images/ram3.png')
         self._graph = HorizontalBarGraph()
         self.layout().insertWidget(1, self._graph)
         self._show_swap = show_swap

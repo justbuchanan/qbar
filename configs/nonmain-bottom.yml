@@ -1,8 +1,0 @@
----
-items:
-    - type: Spacer
-    # - type: Simple
-    #   icon: WorkspaceName
-    - type: DesktopTitle
-      monitor_index: 0
-    - type: Spacer

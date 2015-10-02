@@ -14,51 +14,17 @@ from qbar import *
 from qbar.bar import Bar
 from qbar.stylesheet_loader import StyleSheetLoader
 from qbar.bar_item import *
-import qbar.items as items_module
 
 
 # Returns list of BarItem objects as specified in the config file
 def load_items_from_config(filepath):
-    # Get a list of the names of the modules containing BarItem subclasses
-    items_path = os.path.dirname(__file__) + "/items"
-    item_modules = [tup[1] for tup in pkgutil.iter_modules([items_path])]
-    for module_name in item_modules:
-        importlib.import_module("qbar.items.%s" % module_name)
+    # Use builtin fallback if no config is specified or if it doesn't exist
+    if filepath == None or not os.path.isfile(filepath):
+        filepath = os.path.abspath(os.path.dirname(__file__)) + "/../configs/default.py"
 
-
-    # Load config file
-    try:
-        with open(filepath, 'r') as cfgfile:
-            cfg = yaml.load(cfgfile)
-    except FileNotFoundError as e:
-        # If the user-specified pat
-        # logging.warn("Unable to find user config file, using builtin fallback")
-        fallback_cfgfile_path = os.path.abspath(os.path.dirname(__file__)) + "/../configs/qbar-default.yml"
-        with open(fallback_cfgfile_path, 'r') as cfgfile:
-            cfg = yaml.load(cfgfile)
-
-    items = []
-    for item_info in cfg['items']:
-        class_name = item_info['type'] + "BarItem"
-        logging.info("Loading item of type: '%s'" % item_info['type'])
-
-        klass = None
-        for module_name in item_modules:
-            try:
-                mod = getattr(items_module, module_name)
-                klass = getattr(mod, class_name)
-                break
-            except AttributeError as e:
-                klass = None
-        if klass == None:
-            logging.error("Unable to find BarItem of type '%s', ignoring..." % item_info['type'])
-            continue
-
-        kwargs = dict(item_info)
-        kwargs.pop('type', None)
-        items += [klass(**kwargs)]
-
-    return items
+    sys.path.insert(0, os.path.dirname(filepath))
+    cfg_module = importlib.import_module(os.path.basename(os.path.splitext(filepath)[0]))
+    return cfg_module.items
 
 
 def default_user_config_dir():
@@ -126,10 +92,9 @@ def main():
     # create the bar
     bar = Bar()
 
+    # Load config file and set it up to reload whenever the file changes
     def reload_config(filepath):
         bar.items = load_items_from_config(filepath)
-
-    # Load config file and set it up to reload whenever the file changes
     cfgfile = ARGS.config if ARGS.config != None else default_user_config_dir() + '/config.yml'
     watcher = QFileSystemWatcher()
     watcher.addPath(cfgfile)

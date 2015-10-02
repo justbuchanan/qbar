@@ -18,8 +18,10 @@ class CpuBarItem(PeriodicBarItem):
     ## @param datapoints the number of cpu samples to show in the graph
     #  @param interval how often to sample.
     #  The time period shown by the graph is 
-    def __init__(self, icon=MaskedImageIcon("images/cpu3.png"), interval=0.5, datapoints=20):
+    def __init__(self, icon=None, interval=0.5, datapoints=20):
         super().__init__(icon=icon, interval=interval)
+        if icon == None:
+            icon = MaskedImageIcon("images/cpu3.png")
         self._history = collections.deque(maxlen=datapoints)
         self._graph = LineGraph(datapoints)
         self.layout().addWidget(self._graph)

@@ -4,7 +4,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 from qbar.bar_item import *
-from qbar.items.spacer_bar_item import *
+from qbar.items import *
 
 
 

@@ -1,16 +1,9 @@
-from PyQt5.QtGui import QPainter, QPainterPath
-from PyQt5.QtCore import Qt, QPointF
-from PyQt5.QtWidgets import QWidget, QStyleOption, QStyle
-from PyQt5 import QtCore
-
 from qbar.items.periodic_bar_item import PeriodicBarItem
 from qbar.line_graph import LineGraph
 from qbar.font_awesome import *
+from qbar.masked_icon import *
 import psutil
 import collections
-
-from qbar.masked_icon import *
-
 
 
 # Shows a graph of cpu usage over time
@@ -26,7 +19,6 @@ class CpuBarItem(PeriodicBarItem):
         self._graph = LineGraph(datapoints)
         self.layout().addWidget(self._graph)
         self.text_widget.setParent(None)
-
 
     # Circular buffer of past cpu usage readings
     @property

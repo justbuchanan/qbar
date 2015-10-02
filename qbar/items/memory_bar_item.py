@@ -1,17 +1,12 @@
-from PyQt5.QtGui import QPainter, QPainterPath
-from PyQt5.QtCore import Qt, QPointF
-from PyQt5.QtWidgets import QWidget, QStyleOption, QStyle
-from PyQt5 import QtCore
-
 from qbar.items.periodic_bar_item import PeriodicBarItem
 from qbar.horizontal_bar_graph import *
 from qbar.font_awesome import *
+from qbar.masked_icon import *
 import psutil
 import collections
 
-from qbar.masked_icon import *
 
-
+## Draws a horizontal bar graph showing current memory usage
 class MemoryBarItem(PeriodicBarItem):
     def __init__(self,icon=None, interval=2, show_swap=False):
         if icon == None:
@@ -25,19 +20,12 @@ class MemoryBarItem(PeriodicBarItem):
     @property
     def show_swap(self):
         return self._show_swap
-    
 
     def refresh(self):
         values = []
 
-        mem = psutil.virtual_memory()
-        gb = 1024**3
-        used = mem.used / gb
-        total = mem.total / gb
-        pct = used / total 
-        pct = float(mem.percent) / 100.0
+        pct = psutil.virtual_memory().percent / 100.0
         values.append(pct)
-        # self.text = "%.1f / %.1fgb" % (used, total)
 
         if self.show_swap:
             swap = psutil.swap_memory()

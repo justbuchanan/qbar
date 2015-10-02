@@ -7,7 +7,7 @@ import logging
 #  automatically whenever a relevant css file changes.
 class StyleSheetLoader:
     ## @param filepaths A list of paths to css files with the highest-priority
-    # file last
+    #  file last
     def __init__(self, filepaths, callback):
         self._filepaths = filepaths
         self._fs_watcher = QFileSystemWatcher(self.filepaths)
@@ -37,9 +37,9 @@ class StyleSheetLoader:
     def filepaths(self):
         return self._filepaths
 
-    ## A lambda that takes a concatenated stylesheet string as a parameter.
-    # This is called once at init time and again any time a css file changes on
-    # disk.
+    ## A lambda that takes a concatenated stylesheet string as a parameter. This
+    #  is called once at init time and again any time a css file changes on
+    #  disk.
     @property
     def change_callback(self):
         return self._change_callback

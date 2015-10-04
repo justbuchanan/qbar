@@ -36,8 +36,10 @@ class LineGraph(QWidget):
 
         if self.values == None or len(self.values) == 0: return
 
+        # print(len(self.values))
+
         r = self.rect()
-        dx = r.width() / float(self.datapoints)
+        dx = r.width() / float(self.datapoints - 1)
 
         # Build a path from the readings
         path = QPainterPath()

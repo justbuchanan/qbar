@@ -1,3 +1,8 @@
+# Default configuration for qbar. Intended to be a good starting point, but easy
+# to customize. Disable items by removing them from the list. Add new items by
+# browsing with $python3 -c 'import qbar.items; help(qbar.items)' or by writing
+# your own.
+
 from qbar.items import *
 from qbar.font_awesome import *
 

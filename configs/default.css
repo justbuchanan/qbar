@@ -1,9 +1,6 @@
 
 Bar {
     background-color: #181712;
-}
-
-Bar {
     spacing: 10;
     margin: 10;
 }
@@ -21,27 +18,12 @@ FontAwesomeIcon, MaskedImageIcon {
     color: #6abed8;
 }
 
-LineGraph {
+LineGraph, HorizontalBarGraph {
     min-width: 75;
-    margin: 0;
-}
-
-CpuBarItem LineGraph {
-    background-color: #10ffff00;
-    color: green;
-}
-
-HorizontalBarGraph {
-    min-width: 75;
-}
-
-MulticoreCpuBarItem HorizontalBarGraph {
-    color: green;
     background-color: #20ffff00;
+    color: green;
 }
 
 MemoryBarItem HorizontalBarGraph {
-    color: green;
-    background-color: #20ffff00;
     max-height: 10;
 }

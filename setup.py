@@ -4,11 +4,11 @@ import qbar
 setup(
     name='qbar',
     packages=['qbar', 'qbar.items'],
-    data_files=['configs/qbar-default.css', 'configs/qbar-default.yml'],
+    data_files=['configs/default.css', 'configs/default.py'],
     version=qbar.__version__,
     description=
     'An easily-configurable and flexible status bar for Linux',
-    long_description=open('readme.rst', 'r').read(),
+    long_description=open('README.rst', 'r').read(),
     license='Apache License, Version 2.0',
     author='Justin Buchanan',
     author_email='justbuchanan@gmail.com',

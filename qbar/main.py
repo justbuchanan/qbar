@@ -101,8 +101,12 @@ def main():
     bar.items = cfgmodule.items
     def reload_config(filepath):
         logging.info("Config file changed, reloading: %s" % filepath)
-        importlib.reload(cfgmodule)
-        bar.items = cfgmodule.items
+        try:
+            importlib.reload(cfgmodule)
+            bar.items = cfgmodule.items
+        except SyntaxError as e:
+            logging.error("SyntaxError encountered when attempting to load config file: %s" % str(e))
+            bar.items = []
     watcher = QFileSystemWatcher()
     watcher.addPath(cfgfile)
     watcher.fileChanged.connect(reload_config)

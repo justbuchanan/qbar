@@ -8,7 +8,6 @@ import os
 import pkgutil
 import signal
 import sys
-import yaml
 
 from qbar import *
 from qbar.bar import Bar

@@ -30,4 +30,5 @@ MemoryBarItem HorizontalBarGraph {
 
 DesktopItem {
     /*background-color: yellow;*/
+    color: green;
 }

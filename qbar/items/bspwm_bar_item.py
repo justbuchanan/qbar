@@ -13,7 +13,7 @@ class DesktopItem(QLabel):
 
         # self.setSizeConstraint(QLayout.SetMaximumSize)
 
-        # self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
         self._desktop_info = None
 
 
@@ -46,17 +46,18 @@ class DesktopItem(QLabel):
         focused_states = [Desktop.State.FocusedOccupied, Desktop.State.FocusedFree, Desktop.State.FocusedUrgent]
 
 
+        # Use foreground color for underline
+        styleOpt = QStyleOption()
+        styleOpt.initFrom(self)
+        gcolor = styleOpt.palette.color(QPalette.Text)
+        p.setBrush(gcolor)
+        p.setPen(gcolor)
+
         if self._desktop_info.state in focused_states:
-            rect = self.rect()
-
-            p.setBrush(QBrush(Qt.white))
-            p.setPen(QPen(Qt.white))
-
             h = 2
-            rect.setY(rect.height() - h)
-            rect.setHeight(h)
+            rect = self.rect()
+            p.drawRect(0, rect.height() - h, rect.width(), h)
 
-            p.drawRect(rect)
 
 
 
@@ -71,10 +72,10 @@ class BspwmBarItem(BarItem):
         Thread(target=self.run).start()
 
         layout = QHBoxLayout()
-        # inset = 0
-        # self.spacing = 15
-        # layout.setContentsMargins(inset,0,inset,0)
+        inset = 1
+        layout.setContentsMargins(inset,0,inset,0)
         # print(layout.contentsMargins().top())
+        # self.spacing = 15
         # layout.setSpacing(self.spacing)
         self.setLayout(layout)
         self._desktop_widgets = []

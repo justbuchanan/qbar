@@ -29,6 +29,10 @@ class Bar(QWidget):
 
         # setup layout
         layout = QtWidgets.QHBoxLayout()
+
+        # Keep bar from expanding too much due to an abundance of bar items
+        layout.setSizeConstraint(QLayout.SetMaximumSize)
+
         inset = self.spacing
         layout.setContentsMargins(inset,0,inset,0)
         layout.setSpacing(self.spacing)
@@ -40,7 +44,7 @@ class Bar(QWidget):
     @property
     def spacing(self):
         return self._spacing
-    
+
 
     @property
     def running(self):

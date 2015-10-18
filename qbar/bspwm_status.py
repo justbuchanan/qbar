@@ -18,6 +18,7 @@ class Monitor:
         return self._desktops
 
     def __eq__(self, other):
+        if other == None: return False
         return self.name == other.name and self.active == other.active and self.desktops == other.desktops
 
     def __repr__(self):
@@ -45,6 +46,7 @@ class Desktop:
         return self._state
 
     def __eq__(self, other):
+        if other == None: return False
         return self.name == other.name and self.state == other.state
 
     def __repr__(self):

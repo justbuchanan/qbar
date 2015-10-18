@@ -27,3 +27,7 @@ LineGraph, HorizontalBarGraph {
 MemoryBarItem HorizontalBarGraph {
     max-height: 10;
 }
+
+DesktopItem {
+    /*background-color: yellow;*/
+}

@@ -56,7 +56,8 @@ class BspwmBarItem(SimpleBarItem):
 
             wm_info = parse_bspwm_status(line.rstrip().decode('utf-8'))
             monitor = wm_info[self.monitor_index]
-            self.text = " " + " ".join([repr_by_state[d.state] for d in monitor.desktops])
+            
+            self.text = " " + " ".join([repr_by_state[d.state] + d.name for d in monitor.desktops])
 
 
     @property

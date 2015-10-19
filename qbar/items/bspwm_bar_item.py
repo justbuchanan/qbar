@@ -6,45 +6,41 @@ from qbar.bspwm_status import *
 import subprocess
 from threading import Thread
 
+from PyQt5.QtCore import pyqtSignal
+
+
+# TODO: at init time, we need to query for first infos...
+
 
 class DesktopItem(QLabel):
+
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        # self.setSizeConstraint(QLayout.SetMaximumSize)
-
         self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
+
         self._desktop_info = None
 
 
     def set_info(self, desktop_info):
+        print('info set')
         self._desktop_info = desktop_info
         if self._desktop_info != None:
-            self.setText(self._desktop_info.name)
+            name = self._desktop_info.name
+            d = 5 - len(name)
+            if d < 0: d = 0
+            name += " " * d
+            self.setText(name)
         self.update()
 
 
     def paintEvent(self, event):
-
-
-
         super().paintEvent(event)
 
-
         p = QPainter(self)
-
-        repr_by_state = {
-            Desktop.State.FocusedOccupied: '■',
-            Desktop.State.FocusedFree: '■',
-            Desktop.State.FocusedUrgent: '■',
-            Desktop.State.Occupied: '▪',
-            Desktop.State.Free: '▫',
-            Desktop.State.Urgent: '▪'
-        }
-
+        p.setRenderHint(QPainter.Antialiasing)
 
         focused_states = [Desktop.State.FocusedOccupied, Desktop.State.FocusedFree, Desktop.State.FocusedUrgent]
-
 
         # Use foreground color for underline
         styleOpt = QStyleOption()
@@ -59,9 +55,28 @@ class DesktopItem(QLabel):
             p.drawRect(0, rect.height() - h, rect.width(), h)
 
 
+        spacing = 3
+        w = 3
+        for i in range(self._desktop_info.num_windows):
+            print("desktop %s : %d" % (self._desktop_info.name, self._desktop_info.num_windows))
+            r = QRectF(i*(spacing + w), 0, w, w)
+            p.drawRect(r)
+
+        # Vertical separators
+        rect = self.rect()
+        inset = 6
+        w = 1
+        r = QRectF(rect.width() - w, inset, w, rect.height() - inset*2)
+        # p.drawRect(r)
+
+
 
 
 class BspwmBarItem(BarItem):
+
+    info_changed = pyqtSignal(list)
+
+
     def __init__(self, icon=None, monitor_index=0):
         # super().__init__(icon, "monitor %d" % monitor_index)
         super().__init__()
@@ -74,74 +89,22 @@ class BspwmBarItem(BarItem):
         layout = QHBoxLayout()
         inset = 1
         layout.setContentsMargins(inset,0,inset,0)
-        # print(layout.contentsMargins().top())
-        # self.spacing = 15
-        # layout.setSpacing(self.spacing)
         self.setLayout(layout)
         self._desktop_widgets = []
 
         self._monitor_info = None
 
+        self.info_changed.connect(self.set_info)
+
 
     def run(self):
         for line in self._proc.stdout:
-            # print(self.layout().contentsMargins().top())
-            # repr_by_state = {
-            #     Desktop.State.FocusedOccupied: '<font color=#6abed8>■</font>',
-            #     Desktop.State.FocusedFree: '<font color=#6abed8>■</font>',
-            #     Desktop.State.FocusedUrgent: '<font color=#6abed8>■</font>',
-            #     Desktop.State.Occupied: '▣',
-            #     Desktop.State.Free: '□',
-            #     Desktop.State.Urgent: '<font color="orange">■</font>'
-            # }
-            # repr_by_state = {
-            #     Desktop.State.FocusedOccupied: '■',
-            #     Desktop.State.FocusedFree: '■',
-            #     Desktop.State.FocusedUrgent: '■',
-            #     Desktop.State.Occupied: '▣',
-            #     Desktop.State.Free: '□',
-            #     Desktop.State.Urgent: '■'
-            # # }
-            # repr_by_state = {
-            #     Desktop.State.FocusedOccupied: '■',
-            #     Desktop.State.FocusedFree: '■',
-            #     Desktop.State.FocusedUrgent: '■',
-            #     Desktop.State.Occupied: '▪',
-            #     Desktop.State.Free: '▫',
-            #     Desktop.State.Urgent: '▪'
-            # }
-
             wm_info = parse_bspwm_status(line.rstrip().decode('utf-8'))
-            self._monitor_info = wm_info[self.monitor_index]
-            self.update()
+            self.info_changed.emit(wm_info)
 
 
-    def paintEvent(self, event):
-        super().paintEvent(event)
-
-        # repr_by_state = {
-        #     Desktop.State.FocusedOccupied: '●',
-        #     Desktop.State.FocusedFree: '●',
-        #     Desktop.State.FocusedUrgent: '●',
-        #     Desktop.State.Occupied: '◉',
-        #     Desktop.State.Free: '○',
-        #     Desktop.State.Urgent: '●'
-        # }
-
-        if self._monitor_info == None:
-            return
-        #     # TODO
-        #     return
-        # print("mon: %s" % str(self._monitor_info))
-
-        repr_by_state = {
-            Desktop.State.FocusedOccupied: '■',
-            Desktop.State.FocusedFree: '■',
-            Desktop.State.FocusedUrgent: '■',
-            Desktop.State.Occupied: '▪',
-            Desktop.State.Free: '▫',
-            Desktop.State.Urgent: '▪'
-        }
+    def set_info(self, info):
+        self._monitor_info = info[self.monitor_index]
 
         diff = len(self._monitor_info.desktops) - len(self._desktop_widgets)
         while diff > 0:
@@ -163,17 +126,15 @@ class BspwmBarItem(BarItem):
 
 
         for desktop, widget in zip(self._monitor_info.desktops, self._desktop_widgets):
+            from subprocess import check_output
+            out = check_output(['bspc', 'query', '-W', '-d', desktop.name]).decode('utf-8').strip().split('\n')
+            out = [w for w in out if w != '']
+            num = len(out)
+            desktop.num_windows = num
+
             widget.set_info(desktop)
 
-
-
-
-
-        # def desktop_text(d):
-        #     return repr_by_state[d.state] + ' ' + d.name
-
-        # self.text = " " + "   ".join([desktop_text(d) for d in self._monitor_info.desktops])
-        # self.text.setFontUnderline()
+        self.update()
 
 
     @property

@@ -19,14 +19,14 @@ class DesktopItem(QLabel):
 
     def set_info(self, desktop_info):
         self._desktop_info = desktop_info
+        if self._desktop_info != None:
+            self.setText(self._desktop_info.name)
         self.update()
 
 
     def paintEvent(self, event):
 
 
-        if self._desktop_info != None:
-            self.setText(self._desktop_info.name)
 
         super().paintEvent(event)
 

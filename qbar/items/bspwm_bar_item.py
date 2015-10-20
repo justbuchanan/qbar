@@ -50,7 +50,7 @@ class DesktopItem(QLabel):
         p.setPen(gcolor)
 
         if self._desktop_info.state in focused_states:
-            h = 2
+            h = 1
             rect = self.rect()
             p.drawRect(0, rect.height() - h, rect.width(), h)
 
@@ -59,10 +59,11 @@ class DesktopItem(QLabel):
         w = 3
         totalw = (self._desktop_info.num_windows * (spacing + w)) - spacing
         startx = (self.rect().width() - totalw) / 2
+        y = 3
         for i in range(self._desktop_info.num_windows):
             # print("desktop %s : %d" % (self._desktop_info.name, self._desktop_info.num_windows))
-            r = QRectF(startx + i*(spacing + w), 0, w, w)
-            p.drawRect(r)
+            r = QRectF(startx + i*(spacing + w), y, w, w)
+            p.drawEllipse(r)
 
         # Vertical separators
         if False:

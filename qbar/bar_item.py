@@ -9,17 +9,19 @@ class BarItem(QWidget):
 
     def __init__(self):
         super().__init__()
-        # self._running = False
+        self._bar = None
 
     def start(self):
         pass
     def stop(self):
         pass
 
-    # @property
-    # def running(self):
-    #     return self._running
-    
+    @property
+    def bar(self):
+        return self._bar
+    @bar.setter
+    def bar(self, value):
+        self._bar = value
 
     def __del__(self):
         self.stop()

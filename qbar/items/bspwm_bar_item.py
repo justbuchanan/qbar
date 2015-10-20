@@ -58,7 +58,7 @@ class DesktopItem(QLabel):
         spacing = 3
         w = 3
         for i in range(self._desktop_info.num_windows):
-            print("desktop %s : %d" % (self._desktop_info.name, self._desktop_info.num_windows))
+            # print("desktop %s : %d" % (self._desktop_info.name, self._desktop_info.num_windows))
             r = QRectF(i*(spacing + w), 0, w, w)
             p.drawRect(r)
 
@@ -77,11 +77,8 @@ class BspwmBarItem(BarItem):
     info_changed = pyqtSignal(list)
 
 
-    def __init__(self, icon=None, monitor_index=0):
-        # super().__init__(icon, "monitor %d" % monitor_index)
+    def __init__(self, icon=None):
         super().__init__()
-        self._monitor_index = monitor_index
-
         self._proc = subprocess.Popen(['bspc', 'control', '--subscribe'], stdout=subprocess.PIPE)
 
         Thread(target=self.run).start()
@@ -104,7 +101,17 @@ class BspwmBarItem(BarItem):
 
 
     def set_info(self, info):
-        self._monitor_info = info[self.monitor_index]
+        self._monitor_info = None
+        for monitor_info in info:
+            if self.bar != None and monitor_info.name == self.bar.monitor_name:
+                print("mon info for bar '%s' = %s" % (self.bar.monitor_name, str(monitor_info)))
+                self._monitor_info = monitor_info
+                break
+
+        if self._monitor_info == None:
+            print("Unable to find monitor for item: %s" % self.bar.monitor_name)
+            # TODO: handle this
+            return
 
         diff = len(self._monitor_info.desktops) - len(self._desktop_widgets)
         while diff > 0:
@@ -134,9 +141,6 @@ class BspwmBarItem(BarItem):
 
             widget.set_info(desktop)
 
+        self.icon = self.bar.monitor_name
+
         self.update()
-
-
-    @property
-    def monitor_index(self):
-        return self._monitor_index

@@ -38,9 +38,9 @@ def main():
     parser.add_argument(
         "--monitor",
         "-m",
-        type=int,
-        default=-1,
-        help="Index of the monitor to display the bar on")
+        type=str,
+        default=None,
+        help="Name of the monitor to display the bar on")
 
     # TODO: use css for this instead?
     parser.add_argument(
@@ -79,7 +79,7 @@ def main():
 
     # Init app
     app = QApplication(sys.argv)
-    bar = Bar()
+    bar = Bar(ARGS.monitor, height=ARGS.height, position=ARGS.position)
 
     # Set default stylesheet and override with custom one if present
     stylesheet_files = [os.path.abspath(os.path.dirname(__file__)) + "/../configs/default.css"]
@@ -109,17 +109,6 @@ def main():
     watcher = QFileSystemWatcher()
     watcher.addPath(cfgfile)
     watcher.fileChanged.connect(reload_config)
-    
-    # Bar geometry
-    # Place it based on the "monitor" and "position" options
-    desktop = QApplication.desktop()
-    x = 0
-    for i in range(0, ARGS.monitor):
-        geom = desktop.screenGeometry(i)
-        x += geom.width()
-    geom = desktop.screenGeometry(ARGS.monitor)
-    y = geom.height() - ARGS.height if ARGS.position == "bottom" else 0
-    bar.setGeometry(x, y, geom.width(), ARGS.height)
 
     # Run!
     bar.start()

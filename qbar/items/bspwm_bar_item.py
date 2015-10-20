@@ -63,12 +63,12 @@ class DesktopItem(QLabel):
             p.drawRect(r)
 
         # Vertical separators
-        rect = self.rect()
-        inset = 6
-        w = 1
-        r = QRectF(rect.width() - w, inset, w, rect.height() - inset*2)
-        # p.drawRect(r)
-
+        if False:
+            rect = self.rect()
+            inset = 10
+            w = 0.02
+            r = QRectF(rect.width() - w, inset, w, rect.height() - inset*2)
+            p.drawRect(r)
 
 
 

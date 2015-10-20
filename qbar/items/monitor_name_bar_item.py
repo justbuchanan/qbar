@@ -1,8 +1,9 @@
 from qbar.items.simple_bar_item import *
+from qbar.font_awesome import *
 
 
 class MonitorNameBarItem(SimpleBarItem):
-    def __init__(self, icon=""):
+    def __init__(self, icon=FA_DESKTOP):
         super().__init__(icon)
 
     @BarItem.bar.setter

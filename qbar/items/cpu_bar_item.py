@@ -28,4 +28,7 @@ class CpuBarItem(PeriodicBarItem):
     def refresh(self):
         reading = psutil.cpu_percent() / 100.0
         self.history.append(reading)
-        self._graph.values = self.history
+        self.content_changed.emit(self.history)
+
+    def set_content(self, history):
+        self._graph.values = history

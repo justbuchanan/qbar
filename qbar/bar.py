@@ -7,7 +7,6 @@ from qbar.bar_item import *
 from qbar.items import *
 
 
-
 # Bar that is shown on a single monitor
 class Bar(QWidget):
 

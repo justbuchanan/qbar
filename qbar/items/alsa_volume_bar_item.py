@@ -12,6 +12,11 @@ class AlsaVolumeBarItem(PeriodicBarItem):
         mixer = alsaaudio.Mixer()
         volume_percent = mixer.getvolume()[0]
         muted = mixer.getmute()[0]
+        self.content_changed.emit((muted, volume_percent))
+
+    def set_content(self, info):
+        muted, volume_percent = info
+
         if muted:
             self.icon = MD_VOLUME_OFF
         elif volume_percent > 50:

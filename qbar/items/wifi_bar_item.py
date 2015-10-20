@@ -15,6 +15,9 @@ class WifiBarItem(PeriodicBarItem):
         except wifi.exceptions.InterfaceError as e:
             connections = []
 
+        self.content_changed.emit(connections)
+
+    def set_content(self, connections):
         if len(connections) == 0:
             self.icon = FontAwesomeIcon(FA_SIGNAL_WIFI_OFF)
             self.text = "No WiFi"

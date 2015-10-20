@@ -9,7 +9,10 @@ class DateTimeBarItem(PeriodicBarItem):
         self._format = format
 
     def refresh(self):
-        self.text = time.strftime(self.format)
+        self.content_changed.emit(time.strftime(self.format))
+
+    def set_content(self, formatted_time):
+        self.text = formatted_time
 
     @property
     def format(self):

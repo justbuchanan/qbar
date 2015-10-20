@@ -1,6 +1,7 @@
 from qbar.items.periodic_bar_item import PeriodicBarItem
 import psutil
 
+
 class DiskIoBarItem(PeriodicBarItem):
     def __init__(self, icon="io", interval=0.5, datapoints=20):
         super().__init__(icon=icon, interval=interval)

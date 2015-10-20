@@ -5,7 +5,8 @@ import os
 
 
 class BatteryBarItem(PeriodicBarItem):
-    ## @supply_name The filename under /sys/class/ for the battery we're interested in
+    ## @param supply_name The filename under /sys/class/ for the battery we're
+    #  interested in
     def __init__(self, icon=FA_BATTERY_FULL, supply_name='BAT0', interval=2):
         super().__init__(icon, "Battery", interval)
         self._supply_name = supply_name
@@ -22,6 +23,12 @@ class BatteryBarItem(PeriodicBarItem):
         # energy_full, energy_now, power_now = power.PowerManagement.get_battery_state(supply_path)
         # print("efull: %f, enow: %f, pownow: %f", energy_full, energy_now, power_now)
 
-        self.icon = FA_PLUG if charging else FA_BATTERY_FULL
+        percent = 100 # TODO
 
-        self.text = "100%" # TODO
+        self.content_changed.emit((charging, percent))
+
+
+    def set_content(self, info):
+        charging, percent = info
+        self.icon = FA_PLUG if charging else FA_BATTERY_FULL
+        self.text = "%d%%" % percent

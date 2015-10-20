@@ -32,4 +32,8 @@ class MemoryBarItem(PeriodicBarItem):
             swap_pct = float(swap.percent) / 100.0
             values.append(swap_pct)
 
+        self.content_changed.emit(values)
+
+
+    def set_content(self, values):
         self._graph.values = values

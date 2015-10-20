@@ -57,9 +57,11 @@ class DesktopItem(QLabel):
 
         spacing = 3
         w = 3
+        totalw = (self._desktop_info.num_windows * (spacing + w)) - spacing
+        startx = (self.rect().width() - totalw) / 2
         for i in range(self._desktop_info.num_windows):
             # print("desktop %s : %d" % (self._desktop_info.name, self._desktop_info.num_windows))
-            r = QRectF(i*(spacing + w), 0, w, w)
+            r = QRectF(startx + i*(spacing + w), 0, w, w)
             p.drawRect(r)
 
         # Vertical separators

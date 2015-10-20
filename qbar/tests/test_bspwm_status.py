@@ -24,7 +24,7 @@ class TestBspwmStatus(unittest.TestCase):
             ])
         ]
 
-        print("expected: " + str(expected))
-        print("results: " + str(result))
+        # print("expected: " + str(expected))
+        # print("results: " + str(result))
 
         self.assertEqual(expected, result)

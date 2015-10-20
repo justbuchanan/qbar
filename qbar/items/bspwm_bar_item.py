@@ -23,7 +23,7 @@ class DesktopItem(QLabel):
 
 
     def set_info(self, desktop_info):
-        print('info set')
+        # print('info set')
         self._desktop_info = desktop_info
         if self._desktop_info != None:
             name = self._desktop_info.name
@@ -104,12 +104,12 @@ class BspwmBarItem(BarItem):
         self._monitor_info = None
         for monitor_info in info:
             if self.bar != None and monitor_info.name == self.bar.monitor_name:
-                print("mon info for bar '%s' = %s" % (self.bar.monitor_name, str(monitor_info)))
+                # print("mon info for bar '%s' = %s" % (self.bar.monitor_name, str(monitor_info)))
                 self._monitor_info = monitor_info
                 break
 
         if self._monitor_info == None:
-            print("Unable to find monitor for item: %s" % self.bar.monitor_name)
+            # print("Unable to find monitor for item: %s" % self.bar.monitor_name)
             # TODO: handle this
             return
 

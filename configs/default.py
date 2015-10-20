@@ -7,6 +7,7 @@ from qbar.items import *
 from qbar.font_awesome import *
 
 items = [
+    MonitorNameBarItem(),
     BspwmBarItem(),
     SpacerBarItem(),
     WindowTitleBarItem(),

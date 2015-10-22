@@ -3,34 +3,24 @@ from qbar.bar_item import *
 from qbar.font_awesome import *
 from qbar.bspwm_status import *
 
-import subprocess
-from threading import Thread
-
 from PyQt5.QtCore import pyqtSignal
-
-
-# TODO: at init time, we need to query for first infos...
+from subprocess import check_output, Popen, PIPE
+from threading import Thread
+import math
 
 
 class DesktopItem(QLabel):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-
         self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
-
         self._desktop_info = None
 
 
     def set_info(self, desktop_info):
-        # print('info set')
         self._desktop_info = desktop_info
         if self._desktop_info != None:
-            name = self._desktop_info.name
-            d = 5 - len(name)
-            if d < 0: d = 0
-            name += " " * d
-            self.setText(name)
+            self.setText(self._desktop_info.name)
         self.update()
 
 
@@ -40,32 +30,35 @@ class DesktopItem(QLabel):
         p = QPainter(self)
         p.setRenderHint(QPainter.Antialiasing)
 
-        focused_states = [Desktop.State.FocusedOccupied, Desktop.State.FocusedFree, Desktop.State.FocusedUrgent]
-
-        # Use foreground color for underline
+        # Use foreground color for underline and "window dots"
         styleOpt = QStyleOption()
         styleOpt.initFrom(self)
         gcolor = styleOpt.palette.color(QPalette.Text)
         p.setBrush(gcolor)
         p.setPen(gcolor)
 
+        # draw an underline if thid desktop is currently focused
+        focused_states = [
+            Desktop.State.FocusedOccupied,
+            Desktop.State.FocusedFree,
+            Desktop.State.FocusedUrgent
+        ]
         if self._desktop_info.state in focused_states:
-            h = 1
+            thickness = 1
             rect = self.rect()
-            p.drawRect(0, rect.height() - h, rect.width(), h)
+            p.drawRect(0, rect.height() - thickness, rect.width(), thickness)
 
-
+        # draw dots centered above the name to indicate the number of open windows
         spacing = 3
-        w = 3
-        totalw = (self._desktop_info.num_windows * (spacing + w)) - spacing
+        rad = 3
+        totalw = (self._desktop_info.num_windows * (spacing + rad)) - spacing
         startx = (self.rect().width() - totalw) / 2
         y = 3
         for i in range(self._desktop_info.num_windows):
-            # print("desktop %s : %d" % (self._desktop_info.name, self._desktop_info.num_windows))
-            r = QRectF(startx + i*(spacing + w), y, w, w)
-            p.drawEllipse(r)
+            bbox = QRectF(startx + i*(spacing + rad), y, rad, rad)
+            p.drawEllipse(bbox)
 
-        # Vertical separators
+        # Vertical line border
         if False:
             rect = self.rect()
             inset = 10
@@ -77,25 +70,37 @@ class DesktopItem(QLabel):
 
 class BspwmBarItem(BarItem):
 
+    # Use a signal to pass content from the processing thread to the main UI thread
     info_changed = pyqtSignal(list)
 
 
-    def __init__(self, icon=None):
+    def __init__(self):
         super().__init__()
-        self._proc = subprocess.Popen(['bspc', 'control', '--subscribe'], stdout=subprocess.PIPE)
-
-        Thread(target=self.run).start()
+        self._proc = None
+        self._thread = None
 
         layout = QHBoxLayout()
-        inset = 1
-        layout.setContentsMargins(inset,0,inset,0)
+        layout.setContentsMargins(0,0,0,0)
         self.setLayout(layout)
+
         self._desktop_widgets = []
-
         self._monitor_info = None
-
         self.info_changed.connect(self.set_info)
 
+
+    def start(self):
+        if self._proc == None:
+            self._proc = Popen(['bspc', 'control', '--subscribe'], stdout=PIPE)
+            self._thread = Thread(target=self.run)
+            self._thread.start()
+
+    def stop(self):
+        if self._proc != None:
+            self._proc.terminate()
+            self._proc.wait()
+            self._thread.join()
+            self._proc = None
+            self._thread = None
 
     def run(self):
         for line in self._proc.stdout:
@@ -107,43 +112,36 @@ class BspwmBarItem(BarItem):
         self._monitor_info = None
         for monitor_info in info:
             if self.bar != None and monitor_info.name == self.bar.monitor_name:
-                # print("mon info for bar '%s' = %s" % (self.bar.monitor_name, str(monitor_info)))
                 self._monitor_info = monitor_info
                 break
 
         if self._monitor_info == None:
-            # print("Unable to find monitor for item: %s" % self.bar.monitor_name)
             # TODO: handle this
             return
 
+        # Add or remove DesktopItem objects to match the number of desktops
+        # specified in the info
         diff = len(self._monitor_info.desktops) - len(self._desktop_widgets)
         while diff > 0:
             diff -= 1
-
             d = DesktopItem()
             self.layout().addWidget(d)
             self._desktop_widgets.append(d)
-
         while diff < 0:
             diff += 1
-
-            # self.layout().addWidget(d)
-            # self._desktop_widgets.append(d)
             self._desktop_widgets.pop(0)
             w = self.layout().takeAt(0).widget()
             if w != None:
                 w.setParent(None)
 
-
-        for desktop, widget in zip(self._monitor_info.desktops, self._desktop_widgets):
-            from subprocess import check_output
-            out = check_output(['bspc', 'query', '-W', '-d', desktop.name]).decode('utf-8').strip().split('\n')
+        # Update the info for each DesktopItem widget
+        for i in range(len(self._monitor_info.desktops)):
+            desktop = self._monitor_info.desktops[i]
+            widget = self._desktop_widgets[i]
+            # get a window count for this desktop
+            out = check_output(['bspc', 'query', '-W', '-d', "%s:^%d" % (self._monitor_info.name, i+1)]).decode('utf-8').strip().split('\n')
             out = [w for w in out if w != '']
             num = len(out)
             desktop.num_windows = num
 
             widget.set_info(desktop)
-
-        self.icon = self.bar.monitor_name
-
-        self.update()

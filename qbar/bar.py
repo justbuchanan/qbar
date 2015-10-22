@@ -96,6 +96,10 @@ class Bar(QWidget):
         return self._items
     @items.setter
     def items(self, values):
+        if values == None: values = []
+
+        for item in values: item.bar = self
+
         if self.running:
             # turn off the current items
             if self.items != None:
@@ -104,10 +108,8 @@ class Bar(QWidget):
             if values != None:
                 for item in values: item.start()
 
-        for item in self.items: item.bar = None
-        for item in values: item.bar = self
-
         # remove old items
+        for item in self.items: item.bar = None
         while self.layout().count():
             w = self.layout().takeAt(0).widget()
             if w != None:

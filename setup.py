@@ -21,9 +21,6 @@ setup(
         'Development Status :: 3 - Alpha',
     ],
     entry_points={'console_scripts': ['qbar = qbar.main:main']},
-    install_requires=[
-        'shutil',
-    ],
     extra_requires={
         'wifi_bar_item': ['wifi'],
         'battery_bar_item': ['power'],
